@@ -16,7 +16,7 @@ use Illuminate\Database\Eloquent\Relations\{
   BelongsToMany,
 };
 
-class Event extends Model
+class EventStatus extends Model
 {
   // use SoftDeletes;
 
