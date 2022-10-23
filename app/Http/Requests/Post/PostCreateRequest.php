@@ -31,12 +31,12 @@ class PostCreateRequest extends FormRequest
       'status_id'      => [
         'required',
         'numeric',
-        Rule::unique('post_status'),
+        'exists:post_status,id'
       ],
       'type_id'      => [
         'required',
         'numeric',
-        Rule::unique('post_type'),
+        'exists:post_type,id'
       ],
       'title' => ['required', 'string'],
       'description'  => ['required', 'string'],

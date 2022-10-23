@@ -83,7 +83,7 @@ class PostController extends Controller
       'description' => $request->description,
       'address' => $request->address,
       'suggested_address' => $request->suggested_address,
-      'coords' => explode(",", $request->title),
+      'coords' => explode(",", $request->coords),
       'published_at' => date( 'd.m.Y' , strtotime($request->published_at) ),
       'start_at' => date( 'd.m.Y' , strtotime($request->start_at) ),
       'finish_at' => date( 'd.m.Y' , strtotime($request->finish_at) )
@@ -103,10 +103,7 @@ class PostController extends Controller
   public  function update(PostUpdateRequest $request,int $post_id): JsonResponse
   {
     $user = $request->user();
-    $post  = Post::where(
-      ["id", $post_id],
-      ["author_id", $user->id]
-    )->firstOrFail();
+    $post  = Post::where("id", $post_id)->where("author_id", $user->id)->firstOrFail();
 
     $post = $post->fill($request->all());
 
@@ -123,10 +120,7 @@ class PostController extends Controller
   public  function delete(Request $request, int $post_id): JsonResponse
   {
     $user = $request->user();
-    $post  = Post::where(
-      ["id", $post_id],
-      ["author_id", $user->id]
-    )->firstOrFail();
+    $post  = Post::where("id", $post_id)->where("author_id", $user->id)->firstOrFail();
 
     $post->delete();
 

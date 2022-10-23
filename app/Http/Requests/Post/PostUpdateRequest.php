@@ -31,12 +31,12 @@ class PostUpdateRequest extends FormRequest
       'status_id'      => [
         'nullable',
         'numeric',
-        Rule::unique('post_status'),
+        'exists:post_status,id'
       ],
       'type_id'      => [
         'nullable',
         'numeric',
-        Rule::unique('post_type'),
+        'exists:post_type,id'
       ],
       'title' => ['nullable', 'string'],
       'description'  => ['nullable', 'string'],
