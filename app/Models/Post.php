@@ -68,7 +68,7 @@ class Post extends Model
    */
   public function participants(): belongsToMany
   {
-    return $this->belongsToMany(User::class, 'post_user', 'user_id', 'event_id');
+    return $this->belongsToMany(User::class, 'post_user', 'user_id', 'post_id');
   }
 
   /**

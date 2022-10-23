@@ -268,6 +268,6 @@ class User extends Authenticatable
    */
   public function participations(): belongsToMany
   {
-    return $this->belongsToMany(Post::class, 'event_user', 'event_id', 'user_id');
+    return $this->belongsToMany(Post::class, 'event_user', 'post_id', 'user_id');
   }
 }
