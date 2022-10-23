@@ -7,9 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
-use App\Models\{
-  EstateStatus,
-};
+use App\Models\{EstateStatus, PostStatus};
 
 use App\ValueObjects\{
   PhonePrefix,
@@ -35,7 +33,7 @@ class DictionaryController extends Controller
    */
   public function eventStatusList(Request $request): JsonResponse
   {
-    $event_status_list = EventStatus::query()->get();
-    return response()->json($event_status_list, Response::HTTP_OK);
+    $post_status_list = PostStatus::query()->get();
+    return response()->json($post_status_list, Response::HTTP_OK);
   }
 }

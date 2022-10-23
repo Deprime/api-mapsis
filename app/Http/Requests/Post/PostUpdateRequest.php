@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Event;
+namespace App\Http\Requests\Post;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
@@ -8,7 +8,7 @@ use Illuminate\Http\Exceptions\HttpResponseException;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Validation\Rule;
 
-class EventCreateRequest extends FormRequest
+class PostUpdateRequest extends FormRequest
 {
   /**
    * Determine if the user is authorized to make this request.
@@ -29,18 +29,22 @@ class EventCreateRequest extends FormRequest
   {
     return [
       'status_id'      => [
-        'required',
+        'nullable',
         'numeric',
-        Rule::unique('event_status')->ignore($this->user()->id),
+        Rule::unique('post_status'),
       ],
-      'title' => ['required', 'string'],
-      'description'  => ['required', 'string'],
-      'address'  => ['required', 'string'],
-      'suggested_address'  => ['required', 'string'],
-      'coords'  => ['required', 'string'],
-      'published_at'  => ['required', 'string'],
-      'start_at'  => ['required', 'string'],
-      'finish_at'  => ['required', 'string'],
+      'type_id'      => [
+        'nullable',
+        'numeric',
+        Rule::unique('post_type'),
+      ],
+      'title' => ['nullable', 'string'],
+      'description'  => ['nullable', 'string'],
+      'address'  => ['nullable', 'string'],
+      'suggested_address'  => ['nullable', 'string'],
+      'coords'  => ['nullable', 'string'],
+      'start_at'  => ['nullable', 'string'],
+      'finish_at'  => ['nullable', 'string'],
     ];
   }
 

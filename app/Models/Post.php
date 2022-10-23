@@ -16,12 +16,12 @@ use Illuminate\Database\Eloquent\Relations\{
   BelongsToMany,
 };
 
-class Event extends Model
+class Post extends Model
 {
   use SoftDeletes;
 
   const CUSTOM_DATE_FORMAT = 'd.m.Y';
-  protected $table = 'event';
+  protected $table = 'post';
 
   /**
    * The attributes that are mass assignable.
@@ -67,15 +67,23 @@ class Event extends Model
    */
   public function participants(): belongsToMany
   {
-    return $this->belongsToMany(User::class, 'event_user', 'user_id', 'event_id');
+    return $this->belongsToMany(User::class, 'post_user', 'user_id', 'event_id');
   }
 
   /**
-   * Estate status
+   * Post status
    */
   public function status(): BelongsTo
   {
-    return $this->belongsTo(EstateStatus::class, 'status_id');
+    return $this->belongsTo(PostStatus::class, 'status_id');
+  }
+
+  /**
+   * Post status
+   */
+  public function type(): BelongsTo
+  {
+    return $this->belongsTo(PostType::class, 'type_id');
   }
 
   /**

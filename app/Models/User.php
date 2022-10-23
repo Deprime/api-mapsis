@@ -260,7 +260,7 @@ class User extends Authenticatable
    */
   public function events(): HasMany
   {
-    return $this->hasMany(Event::class, 'author_id', 'id');
+    return $this->hasMany(Post::class, 'author_id', 'id');
   }
 
   /**
@@ -268,6 +268,6 @@ class User extends Authenticatable
    */
   public function participations(): belongsToMany
   {
-    return $this->belongsToMany(Event::class, 'event_user', 'event_id', 'user_id');
+    return $this->belongsToMany(Post::class, 'event_user', 'event_id', 'user_id');
   }
 }
