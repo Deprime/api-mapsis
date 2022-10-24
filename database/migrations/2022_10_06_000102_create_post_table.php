@@ -21,7 +21,7 @@ class CreatePostTable extends Migration
             $table->unsignedSmallInteger('status_id')->default(1);
             $table->text('title');
             $table->text('description');
-            $table->text('address');
+            $table->text('address')->nullable();
             $table->text('suggested_address')->nullable()->comment('Address suggested by Map service geocoder');
             $table->text('coords')->nullable();
             $table->timestamp('published_at')->nullable()->comment('Event publish datetime');

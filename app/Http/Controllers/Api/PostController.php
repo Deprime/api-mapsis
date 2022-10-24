@@ -72,24 +72,18 @@ class PostController extends Controller
   public  function create(PostCreateRequest $request): JsonResponse
   {
     $user = $request->user();
-    $draftStatus  = PostStatus::findOrFail(1);
-    $draftType  = PostType::findOrFail(1);
+    $draftStatus  = PostStatus::findOrFail(1); // Draft
+    $draftType  = PostType::findOrFail(2);     // Service
 
-    $post = Post::create([
-      'author_id' => $user->id,
-      'status_id' => $draftStatus->id,
-      'type_id' => $draftType->id,
-      'title' => $request->title,
-      'description' => $request->description,
-      'address' => $request->address,
-      'suggested_address' => $request->suggested_address,
-      'coords' => explode(",", $request->coords),
-      'published_at' => date( 'd.m.Y' , strtotime($request->published_at) ),
-      'start_at' => date( 'd.m.Y' , strtotime($request->start_at) ),
-      'finish_at' => date( 'd.m.Y' , strtotime($request->finish_at) )
-    ]);
 
-    $post->save();
+    $input = $request->validated();
+
+    $input['author_id'] = $user->id;
+    $input['status_id'] = $draftStatus->id;
+    $input['type_id'] = $draftType->id;
+    $input['coords'] = explode(",", $request->coords);
+
+    $post = Post::create($input);
 
     return response()->json($post);
   }

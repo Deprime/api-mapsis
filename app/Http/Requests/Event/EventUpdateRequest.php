@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Post;
+namespace App\Http\Requests\Event;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
@@ -8,7 +8,7 @@ use Illuminate\Http\Exceptions\HttpResponseException;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Validation\Rule;
 
-class PostCreateRequest extends FormRequest
+class EventUpdateRequest extends FormRequest
 {
   /**
    * Determine if the user is authorized to make this request.
@@ -28,11 +28,23 @@ class PostCreateRequest extends FormRequest
   public function rules()
   {
     return [
-      'title' => ['required', 'string'],
-      'description'  => ['required', 'string'],
+      'status_id'      => [
+        'nullable',
+        'numeric',
+        'exists:post_status,id'
+      ],
+      'type_id'      => [
+        'nullable',
+        'numeric',
+        'exists:post_type,id'
+      ],
+      'title' => ['nullable', 'string'],
+      'description'  => ['nullable', 'string'],
       'address'  => ['nullable', 'string'],
       'suggested_address'  => ['nullable', 'string'],
       'coords'  => ['nullable', 'string'],
+      'start_at'  => ['nullable', 'string'],
+      'finish_at'  => ['nullable', 'string'],
     ];
   }
 
