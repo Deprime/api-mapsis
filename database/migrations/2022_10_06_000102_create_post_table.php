@@ -16,6 +16,7 @@ class CreatePostTable extends Migration
         Schema::create('post', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('type_id');
+            $table->unsignedInteger('category_id')->nullable();
             $table->unsignedInteger('author_id');
             $table->unsignedSmallInteger('status_id')->default(1);
             $table->text('title');
@@ -29,6 +30,7 @@ class CreatePostTable extends Migration
             $table->timestamp('created_at');
             $table->timestamp('updated_at')->nullable();
             $table->softDeletes();
+            $table->foreign('category_id')->references('id')->on('category')->onUpdate('set null')->onDelete('set null');
         });
     }
 
