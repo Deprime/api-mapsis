@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
-class EventStatusTableSeeder extends Seeder
+class PostStatusTableSeeder extends Seeder
 {
 
     /**
@@ -14,31 +14,27 @@ class EventStatusTableSeeder extends Seeder
      */
     public function run()
     {
-        
+        \DB::table('post_status')->delete();
 
-        \DB::table('event_status')->delete();
-        
-        \DB::table('event_status')->insert(array (
-            0 => 
+        \DB::table('post_status')->insert(array (
+            0 =>
             array (
                 'id' => 1,
                 'title' => 'Draft',
                 'mui_key' => 'draft',
             ),
-            1 => 
+            1 =>
             array (
                 'id' => 2,
                 'title' => 'Published',
-                'mui_key' => 'Publishedp',
+                'mui_key' => 'Published',
             ),
-            2 => 
+            2 =>
             array (
                 'id' => 3,
                 'title' => 'Archived',
                 'mui_key' => 'archived',
             ),
         ));
-        
-        
     }
 }

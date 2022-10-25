@@ -13,7 +13,7 @@ use \App\Requests\Profile\{
 
 class ProfileService {
 
-  protected const RELATIONS = ['company', 'realtor_accesses', 'contacts'];
+  //protected const RELATIONS = ['company', 'realtor_accesses', 'contacts'];
 
   /**
    * Update current user profile

@@ -16,18 +16,18 @@ use Illuminate\Database\Eloquent\Relations\{
   BelongsToMany,
 };
 
-class Event extends Model
+class PostStatus extends Model
 {
   // use SoftDeletes;
 
   const CUSTOM_DATE_FORMAT = 'd.m.Y';
-  protected $table = 'event_status';
+  protected $table = 'post_status';
 
   /**
-   * Events
+   * Posts
    */
-  public function events(): HasMany
+  public function posts(): HasMany
   {
-    return $this->hasMany(Event::class, 'status_id', 'id');
+    return $this->hasMany(Post::class, 'status_id', 'id');
   }
 }

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateEventTable extends Migration
+class CreatePostTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,15 @@ class CreateEventTable extends Migration
      */
     public function up()
     {
-        Schema::create('event', function (Blueprint $table) {
+        Schema::create('post', function (Blueprint $table) {
             $table->increments('id');
+            $table->unsignedInteger('type_id');
+            $table->unsignedInteger('category_id')->nullable();
             $table->unsignedInteger('author_id');
             $table->unsignedSmallInteger('status_id')->default(1);
             $table->text('title');
             $table->text('description');
-            $table->text('address');
+            $table->text('address')->nullable();
             $table->text('suggested_address')->nullable()->comment('Address suggested by Map service geocoder');
             $table->text('coords')->nullable();
             $table->timestamp('published_at')->nullable()->comment('Event publish datetime');
@@ -28,6 +30,7 @@ class CreateEventTable extends Migration
             $table->timestamp('created_at');
             $table->timestamp('updated_at')->nullable();
             $table->softDeletes();
+            $table->foreign('category_id')->references('id')->on('category')->onUpdate('set null')->onDelete('set null');
         });
     }
 
@@ -38,6 +41,6 @@ class CreateEventTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('event');
+        Schema::dropIfExists('post');
     }
 }

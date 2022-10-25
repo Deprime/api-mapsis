@@ -11,7 +11,7 @@ use App\Http\Controllers\Api\Auth\{
 use App\Http\Controllers\Api\{
   ProfileController,
   DictionaryController,
-  EventController,
+  PostController,
 };
 
 /*
@@ -54,12 +54,13 @@ Route::namespace('Api')->group(function() {
           Route::put('/change-password',  [ProfileController::class, 'changePassword']);
         });
 
-        // Events
-        Route::prefix('events')->group(function() {
-          Route::get('/',             [EventController::class, 'list']);
-          Route::get('/{event_id}',   [EventController::class, 'get'])->whereNumber('event_id');
-          Route::post('/',            [EventController::class, 'create']);
-          Route::put('/{event_id}',   [EventController::class, 'update'])->whereNumber('event_id');
+        // Posts
+        Route::prefix('posts')->group(function() {
+          Route::get('/',             [PostController::class, 'list']);
+          Route::get('/{event_id}',   [PostController::class, 'get'])->whereNumber('event_id');
+          Route::post('/',            [PostController::class, 'create']);
+          Route::put('/{event_id}',   [PostController::class, 'update'])->whereNumber('event_id');
+          Route::delete('/{event_id}',[PostController::class, 'delete'])->whereNumber('event_id');
         });
       });
     });

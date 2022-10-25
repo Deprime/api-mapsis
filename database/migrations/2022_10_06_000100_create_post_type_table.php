@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateEventStatusTable extends Migration
+class CreatePostTypeTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateEventStatusTable extends Migration
      */
     public function up()
     {
-        Schema::create('event_status', function (Blueprint $table) {
+        Schema::create('post_type', function (Blueprint $table) {
             $table->tinyIncrements('id');
             $table->string('title', 50);
             $table->string('mui_key', 50);
@@ -27,6 +27,6 @@ class CreateEventStatusTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('event_status');
+        Schema::dropIfExists('post_type');
     }
 }

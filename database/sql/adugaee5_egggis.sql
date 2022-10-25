@@ -47,20 +47,20 @@ CREATE TABLE `event` (
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `event_status`
+-- Структура таблицы `post_status`
 --
 
-CREATE TABLE `event_status` (
+CREATE TABLE `post_status` (
   `id` tinyint UNSIGNED NOT NULL,
   `title` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `mui_key` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Дамп данных таблицы `event_status`
+-- Дамп данных таблицы `post_status`
 --
 
-INSERT INTO `event_status` (`id`, `title`, `mui_key`) VALUES
+INSERT INTO `post_status` (`id`, `title`, `mui_key`) VALUES
 (1, 'Draft', 'draft'),
 (2, 'Published', 'Publishedp'),
 (3, 'Archived', 'archived');
@@ -111,7 +111,7 @@ CREATE TABLE `migrations` (
 
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (1, '2022_10_06_075620_create_event_table', 0),
-(2, '2022_10_06_075620_create_event_status_table', 0),
+(2, '2022_10_06_075620_create_post_status_table', 0),
 (3, '2022_10_06_075620_create_event_user_table', 0),
 (4, '2022_10_06_075620_create_failed_jobs_table', 0),
 (5, '2022_10_06_075620_create_password_resets_table', 0),
@@ -208,9 +208,9 @@ ALTER TABLE `event`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `event_status`
+-- Индексы таблицы `post_status`
 --
-ALTER TABLE `event_status`
+ALTER TABLE `post_status`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -271,9 +271,9 @@ ALTER TABLE `event`
   MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT для таблицы `event_status`
+-- AUTO_INCREMENT для таблицы `post_status`
 --
-ALTER TABLE `event_status`
+ALTER TABLE `post_status`
   MODIFY `id` tinyint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
