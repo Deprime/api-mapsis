@@ -50,6 +50,7 @@ Route::namespace('Api')->group(function() {
         // Profile
         Route::prefix('profile')->group(function() {
           Route::get('/',                 [ProfileController::class, 'get']);
+          Route::get('/referrals',        [ProfileController::class, 'getReferrals']);
           Route::put('/',                 [ProfileController::class, 'update']);
           Route::put('/change-password',  [ProfileController::class, 'changePassword']);
         });

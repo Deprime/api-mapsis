@@ -69,7 +69,8 @@ class User extends Authenticatable
     'birthdate',
     'role',
     'avatar_url',
-    'promocode'
+    'referal_parent_id',
+    'referal_connected_at'
   ];
 
   /**
@@ -262,6 +263,14 @@ class User extends Authenticatable
   public function events(): HasMany
   {
     return $this->hasMany(Post::class, 'author_id', 'id');
+  }
+
+  /**
+   * referrals
+   */
+  public function referrals(): HasMany
+  {
+    return $this->hasMany(self::class, 'referal_parent_id', 'id');
   }
 
   /**

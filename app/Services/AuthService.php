@@ -35,12 +35,10 @@ class AuthService {
    */
   public static function createUserByPhone($phone, $prefix, $password): User
   {
-    $promocode = strtoupper(Str::random(6));
 
     $input = [
       'phone'    => $phone,
       'prefix'   => $prefix,
-      'promocode'=> $promocode,
       'password' => Hash::make($password),
       'phone_verified_at' => date("Y-m-d H:i:s"),
     ];

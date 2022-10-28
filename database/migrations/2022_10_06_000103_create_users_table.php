@@ -34,7 +34,8 @@ class CreateUsersTable extends Migration
             $table->enum('sex', ['male', 'female']);
             $table->text('avatar_url')->nullable();
             $table->boolean('is_active')->default(true);
-            $table->string('promocode', 6)->comment('user promo code');
+            $table->unsignedInteger('referal_parent_id')->nullable();
+            $table->timestamp('referal_connected_at')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
