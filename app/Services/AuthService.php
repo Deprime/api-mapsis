@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 use App\Models\User;
+use Illuminate\Support\Str;
 
 class AuthService {
 
@@ -34,9 +35,12 @@ class AuthService {
    */
   public static function createUserByPhone($phone, $prefix, $password): User
   {
+    $promocode = strtoupper(Str::random(6));
+
     $input = [
       'phone'    => $phone,
       'prefix'   => $prefix,
+      'promocode'=> $promocode,
       'password' => Hash::make($password),
       'phone_verified_at' => date("Y-m-d H:i:s"),
     ];

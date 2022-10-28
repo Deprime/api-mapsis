@@ -25,6 +25,7 @@ class UserSeeder extends Seeder
           'email'       => 'deprimehell@gmail.com',
           'prefix'      => '+7',
           'phone'       => '9824165796',
+          'promocode'   => 'AAAAAA',
           'password'    => Hash::make('testpassword1'),
           'created_at'  => date("Y-m-d H:i:s"),
           'updated_at'  => date("Y-m-d H:i:s"),

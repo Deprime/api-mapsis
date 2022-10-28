@@ -68,7 +68,8 @@ class User extends Authenticatable
     'patronymic',
     'birthdate',
     'role',
-    'avatar_url'
+    'avatar_url',
+    'promocode'
   ];
 
   /**

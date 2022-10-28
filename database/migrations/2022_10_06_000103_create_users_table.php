@@ -34,6 +34,7 @@ class CreateUsersTable extends Migration
             $table->enum('sex', ['male', 'female']);
             $table->text('avatar_url')->nullable();
             $table->boolean('is_active')->default(true);
+            $table->string('promocode', 6)->comment('user promo code');
             $table->timestamps();
             $table->softDeletes();
         });
