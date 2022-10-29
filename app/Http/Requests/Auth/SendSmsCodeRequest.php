@@ -31,9 +31,12 @@ class SendSmsCodeRequest extends FormRequest
    */
   public function rules()
   {
+    $prefix = $this->prefix;
+    $length = PhonePrefix::getLengthByPrefix($prefix);
+
     return [
       'prefix' => ['required', 'string', Rule::in(PhonePrefix::prefixList())],
-      'phone'  => ['required', 'digits:10', 'unique:users' ],
+      'phone'  => ['required', "digits:$length", 'unique:users' ],
     ];
   }
 

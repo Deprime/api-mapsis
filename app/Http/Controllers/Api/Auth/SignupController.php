@@ -67,13 +67,13 @@ class SignupController extends Controller
 
     $code = rand(0,9) . rand(0,9) . rand(0,9) . rand(0,9);
 
-    $SmsAero  = new SmsAero(config('smsaero.login'), config('smsaero.api_key'), config('smsaero.sign'));
-
     if (config('app.env') === "production") {
+      $SmsAero  = new SmsAero(config('smsaero.login'), config('smsaero.api_key'), config('smsaero.sign'));
       $response = $SmsAero->flashcall($number, $code);
+      // SMS variant
+      // $type     = 'DIRECT';
+      // $response = $SmsAero->send("code: $code", $number, $type);
     }
-    // $type     = 'DIRECT';
-    // $response = $SmsAero->send("code: $code", $number, $type);
 
     $sms_code = SmsCode::create([
       'prefix' => $input['prefix'],
@@ -83,7 +83,7 @@ class SignupController extends Controller
 
     return response()->json([
       'phone' => $input['prefix'] . $input['phone'],
-      'code'   => config('app.env') === "production" ? "sent" : $code,
+      'code'  => config('app.env') === "production" ? "sent" : $code,
     ]);
   }
 
