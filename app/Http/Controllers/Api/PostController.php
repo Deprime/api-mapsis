@@ -3,27 +3,30 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Post\PostCreateRequest;
-use App\Http\Requests\Post\PostUpdateRequest;
-use Illuminate\Http\Request;
-use Illuminate\Http\JsonResponse;
+use Illuminate\Http\{
+  Request,
+  JsonResponse,
+};
 use Symfony\Component\HttpFoundation\Response;
-
 use Illuminate\Support\Facades\Storage;
 
-// use App\Helpers\SmsAero;
-// use App\Services\ProfileService;
+use \App\Http\Requests\Post\{
+  PostCreateRequest,
+  PostUpdateRequest,
+  PostUpdateStatusRequest
+};
 
-// use \App\Http\Requests\post\{
-//   postCreateRequest,
-// };
-
-use App\Models\{PostType, User, Post, PostStatus};
+use App\Models\{
+  PostType,
+  User,
+  Post,
+  PostStatus
+};
 
 class PostController extends Controller
 {
-  protected const LIST_RELATIONS = ['author', 'participants', 'status'];
-  protected const ITEM_RELATIONS = ['author', 'participants', 'status'];
+  protected const LIST_RELATIONS = ['author', 'status', 'poster'];
+  protected const ITEM_RELATIONS = ['author', 'status', 'photos'];
 
   /**
    * List
@@ -69,19 +72,16 @@ class PostController extends Controller
    * @param PostCreateRequest $request
    * @return JsonResponse
    */
-  public  function create(PostCreateRequest $request): JsonResponse
+  public function create(PostCreateRequest $request): JsonResponse
   {
-    $user = $request->user();
-    $draftStatus  = PostStatus::findOrFail(1); // Draft
-    $draftType  = PostType::findOrFail(2);     // Service
-
-
     $input = $request->validated();
+    $user  = $request->user();
+    $draftStatus = PostStatus::findOrFail(1); // Draft
+    $draftType   = PostType::findOrFail(2);     // Service
 
     $input['author_id'] = $user->id;
     $input['status_id'] = $draftStatus->id;
     $input['type_id'] = $draftType->id;
-    $input['coords'] = explode(",", $request->coords);
 
     $post = Post::create($input);
 
@@ -94,16 +94,52 @@ class PostController extends Controller
    * @param int $post_id
    * @return JsonResponse
    */
-  public  function update(PostUpdateRequest $request,int $post_id): JsonResponse
+  public function update(PostUpdateRequest $request, int $post_id): JsonResponse
   {
-    $user = $request->user();
-    $post  = Post::where("id", $post_id)->where("author_id", $user->id)->firstOrFail();
+    $input = $request->validated();
+    $user  = $request->user();
 
-    $post = $post->fill($request->all());
+    $post  = Post::where("id", $post_id)
+                 ->where("author_id", $user->id)
+                 ->firstOrFail();
 
-    $post->save();
-
+    $post->update($input);
     return response()->json($post);
+  }
+
+  /**
+   * Set status
+   * @param  int $post_id
+   * @param  \Illuminate\Http\Request  $request
+   * @return \Illuminate\Http\JsonResponse
+   */
+  public function setStatus(PostUpdateStatusRequest $request, $post_id): JsonResponse
+  {
+    $user  = $request->user();
+    $input = $request->validated();
+
+    $post = Post::query()
+                      ->with(["status"])
+                      ->where('id', $post_id)
+                      ->where('author_id', $user->id)
+                      ->first();
+
+    if ($post) {
+      $post_status = PostStatus::find($input['status']);
+
+      if ($post_status) {
+        $data = ['status_id' => $post_status->id];
+
+        // If it's first publishing
+        if ($post_status->id === 2 && !$post->published_at) {
+          $data['published_at'] = date("Y-m-d H:i:s");
+        }
+
+        $post->update($data);
+        return response()->json($post_status);
+      }
+    }
+    return response()->json([], Response::HTTP_NOT_FOUND);
   }
 
   /**
@@ -111,7 +147,7 @@ class PostController extends Controller
    * @param Request $request
    * @return JsonResponse
    */
-  public  function delete(Request $request, int $post_id): JsonResponse
+  public function delete(Request $request, int $post_id): JsonResponse
   {
     $user = $request->user();
     $post  = Post::where("id", $post_id)->where("author_id", $user->id)->firstOrFail();

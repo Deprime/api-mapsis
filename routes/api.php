@@ -10,8 +10,10 @@ use App\Http\Controllers\Api\Auth\{
 
 use App\Http\Controllers\Api\{
   ProfileController,
-  DictionaryController,
   PostController,
+  PhotoController,
+  SearchController,
+  DictionaryController,
 };
 
 /*
@@ -38,9 +40,16 @@ Route::namespace('Api')->group(function() {
       Route::post('validate-phone', [SignupController::class, 'validatePhone']);
     });
 
+    // Search
+    Route::prefix('search')->group(function () {
+      Route::get('/',           [SearchController::class, 'list']);
+      Route::get('/{post_id}',  [SearchController::class, 'get'])->whereNumber('post_id');
+    });
+
     // Dictionary
     Route::prefix('dictionary')->group(function () {
       Route::get('phone-prefix-list',   [DictionaryController::class, 'phonePrefixList']);
+      Route::get('category-list',   [DictionaryController::class, 'categoryList']);
     });
 
     // Application
@@ -56,11 +65,20 @@ Route::namespace('Api')->group(function() {
 
         // Posts
         Route::prefix('posts')->group(function() {
-          Route::get('/',             [PostController::class, 'list']);
-          Route::get('/{event_id}',   [PostController::class, 'get'])->whereNumber('event_id');
-          Route::post('/',            [PostController::class, 'create']);
-          Route::put('/{event_id}',   [PostController::class, 'update'])->whereNumber('event_id');
-          Route::delete('/{event_id}',[PostController::class, 'delete'])->whereNumber('event_id');
+          Route::get('/',                 [PostController::class, 'list']);
+          Route::get('/{post_id}',        [PostController::class, 'get'])->whereNumber('post_id');
+          Route::post('/',                [PostController::class, 'create']);
+          Route::put('/{post_id}',        [PostController::class, 'update'])->whereNumber('post_id');
+          Route::delete('/{post_id}',     [PostController::class, 'delete'])->whereNumber('post_id');
+          Route::put('/{post_id}/status', [PostController::class, 'setStatus'])->whereNumber('post_id');
+
+          // Photos
+          Route::group(['prefix' => '/{post_id}/photos', 'where' => ['post_id' => '[0-9]+']], function () {
+            Route::get('/',             [PhotoController::class, 'list']);
+            Route::post('/',            [PhotoController::class, 'create']);
+            Route::put('{photo_id}',    [PhotoController::class, 'setPoster'])->whereNumber('photo_id');
+            Route::delete('{photo_id}', [PhotoController::class, 'delete'])->whereNumber('photo_id');
+          });
         });
       });
     });

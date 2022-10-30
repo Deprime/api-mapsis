@@ -12,6 +12,7 @@ class PostType extends Model
 
   const CUSTOM_DATE_FORMAT = 'd.m.Y';
   protected $table = 'post_type';
+  public $timestamps = false;
 
   /**
    * Posts

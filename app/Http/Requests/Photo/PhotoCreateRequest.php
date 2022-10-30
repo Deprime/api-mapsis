@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Post;
+namespace App\Http\Requests\Photo;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
@@ -8,7 +8,7 @@ use Illuminate\Http\Exceptions\HttpResponseException;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Validation\Rule;
 
-class PostUpdateRequest extends FormRequest
+class PhotoCreateRequest extends FormRequest
 {
   /**
    * Determine if the user is authorized to make this request.
@@ -28,23 +28,11 @@ class PostUpdateRequest extends FormRequest
   public function rules()
   {
     return [
-      'title'       => ['required', 'string'],
-      'description' => ['required', 'string'],
-      'category_id' => [
-        'required',
-        'numeric',
-        'exists:category,id'
-      ],
-      'address'   => ['nullable', 'string'],
-      'coords'    => ['nullable', 'array'],
-      'coords.*'  => ['numeric'],
-      'price'     => ['required', 'numeric'],
-      'suggested_address' => ['nullable', 'string'],
-      // 'start_at'   => ['nullable', 'string'],
-      // 'finish_at'  => ['nullable', 'string'],
+      'photos' => ['required', 'array',],
+      'photos.*' => ['required', 'image', 'mimes:jpg,jpeg,png', 'max:5120',],
+      // '*' => ['required','image', 'mimes:jpg,jpeg,png', 'max:3072',],
     ];
   }
-
 
   /**
    * Fail validation response
@@ -52,6 +40,6 @@ class PostUpdateRequest extends FormRequest
    * @throws Illuminate\Http\Exceptions\HttpResponseException
    */
   protected function failedValidation(Validator $validator) {
-    throw new HttpResponseException(response()->json($validator->errors(), Response::HTTP_PRECONDITION_FAILED));
+    throw new HttpResponseException(response()->json($validator->errors(), Response::HTTP_UNAUTHORIZED));
   }
 }
