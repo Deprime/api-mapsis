@@ -16,19 +16,8 @@ use Illuminate\Database\Eloquent\Relations\{
   BelongsToMany,
 };
 
-class PostStatus extends Model
+class Category extends Model
 {
-  // use SoftDeletes;
-
-  const CUSTOM_DATE_FORMAT = 'd.m.Y';
-  protected $table = 'post_status';
+  protected $table = 'category';
   public $timestamps = false;
-
-  /**
-   * Posts
-   */
-  public function posts(): HasMany
-  {
-    return $this->hasMany(Post::class, 'status_id', 'id');
-  }
 }

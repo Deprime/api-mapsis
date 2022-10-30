@@ -15,6 +15,7 @@ class CategorySeeder extends Seeder
      */
     public function run()
     {
+      DB::table('category')->truncate();
       DB::table('category')->insert([
         [
           'slug'      => 'rent',
@@ -24,7 +25,7 @@ class CategorySeeder extends Seeder
           'title_en'  => 'Rent'
         ],
         [
-          'slug'      => 'Events',
+          'slug'      => 'events',
           'order'     => 'DESC',
           'mui_key'   => 'events_category',
           'title_ru'  => 'Знакомства и мероприятия',

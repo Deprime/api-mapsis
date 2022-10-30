@@ -14,8 +14,7 @@ class PostTypeTableSeeder extends Seeder
      */
     public function run()
     {
-      \DB::table('post_type')->delete();
-
+      \DB::table('post_type')->truncate();
       \DB::table('post_type')->insert(array (
         0 =>
           array (

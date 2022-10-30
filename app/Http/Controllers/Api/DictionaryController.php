@@ -7,7 +7,10 @@ use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
-use App\Models\{EstateStatus, PostStatus};
+use App\Models\{
+  PostStatus,
+  Category,
+};
 
 use App\ValueObjects\{
   PhonePrefix,
@@ -16,7 +19,7 @@ use App\ValueObjects\{
 class DictionaryController extends Controller
 {
   /**
-   * List
+   * Phone prefix list
    * @param  \Illuminate\Http\Request  $request
    * @return \Illuminate\Http\JsonResponse
    */
@@ -27,7 +30,7 @@ class DictionaryController extends Controller
   }
 
   /**
-   * Event status list
+   * Post status list
    * @param  \Illuminate\Http\Request  $request
    * @return \Illuminate\Http\JsonResponse
    */
@@ -35,5 +38,16 @@ class DictionaryController extends Controller
   {
     $post_status_list = PostStatus::query()->get();
     return response()->json($post_status_list, Response::HTTP_OK);
+  }
+
+  /**
+   * Category  list
+   * @param  \Illuminate\Http\Request  $request
+   * @return \Illuminate\Http\JsonResponse
+   */
+  public function categoryList(Request $request): JsonResponse
+  {
+    $category_list = Category::query()->get();
+    return response()->json($category_list, Response::HTTP_OK);
   }
 }

@@ -14,8 +14,7 @@ class PostStatusTableSeeder extends Seeder
      */
     public function run()
     {
-        \DB::table('post_status')->delete();
-
+        \DB::table('post_status')->truncate();
         \DB::table('post_status')->insert(array (
             0 =>
             array (
