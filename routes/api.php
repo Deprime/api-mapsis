@@ -61,6 +61,12 @@ Route::namespace('Api')->group(function() {
           Route::get('/',                 [ProfileController::class, 'get']);
           Route::put('/',                 [ProfileController::class, 'update']);
           Route::put('/change-password',  [ProfileController::class, 'changePassword']);
+
+          // Referrals
+          Route::prefix('referrals')->group(function() {
+            Route::get('/',                 [ProfileController::class, 'getReferrals']);
+            Route::get('/{ref_id}',         [ProfileController::class, 'getReferralInfo'])->whereNumber('ref_id');
+          });
         });
 
         // Posts

@@ -138,4 +138,30 @@ class ProfileController extends Controller
 
     return response()->json(['user' => $user]);
   }
+
+  /**
+   * Get referrals list
+   *
+   * @param  \Illuminate\Http\Request $request
+   * @return \Illuminate\Http\JsonResponse
+   */
+  public function getReferrals(Request $request): JsonResponse
+  {
+    $user = $request->user();
+    $refferrals_list = ProfileService::getReferrals($user);
+    return response()->json($refferrals_list);
+  }
+
+  /**
+   * Get referral info
+   *
+   * @param  \Illuminate\Http\Request $request
+   * @return \Illuminate\Http\JsonResponse
+   */
+  public function getReferralInfo(Request $request,int $ref_id): JsonResponse
+  {
+    $user = $request->user();
+    $refferral = ProfileService::getReferrals($user)->where('id', '=', $ref_id)->firstOrFail();
+    return response()->json([]);
+  }
 }
