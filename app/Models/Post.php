@@ -32,11 +32,13 @@ class Post extends Model
     'type_id',
     'author_id',
     'status_id',
+    'category_id',
     'title',
     'description',
     'address',           // User's manual entered address
     'suggested_address', // Address suggested by Map service geocoder
     'coords',            // Map marker coordinates
+    'price',
     'published_at',
     'start_at',
     'finish_at',
@@ -85,6 +87,24 @@ class Post extends Model
   public function type(): BelongsTo
   {
     return $this->belongsTo(PostType::class, 'type_id');
+  }
+
+  /**
+   * Photos
+   */
+  public function photos(): HasMany
+  {
+    return $this->hasMany(Photo::class, 'post_id', 'id');
+  }
+
+  /**
+   * Poster
+   */
+  public function poster()
+  {
+    return $this->hasOne(Photo::class, 'post_id', 'id')
+                ->where('is_poster', 1);
+                // ->first();
   }
 
   /**

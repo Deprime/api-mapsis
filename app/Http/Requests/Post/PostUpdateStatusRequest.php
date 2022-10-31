@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Auth;
+namespace App\Http\Requests\Post;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
@@ -8,11 +8,7 @@ use Illuminate\Http\Exceptions\HttpResponseException;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Validation\Rule;
 
-use App\ValueObjects\{
-  PhonePrefix,
-};
-
-class SendSmsCodeRequest extends FormRequest
+class PostUpdateStatusRequest extends FormRequest
 {
   /**
    * Determine if the user is authorized to make this request.
@@ -31,12 +27,8 @@ class SendSmsCodeRequest extends FormRequest
    */
   public function rules()
   {
-    $prefix = $this->prefix;
-    $length = PhonePrefix::getLengthByPrefix($prefix);
-
     return [
-      'prefix' => ['required', 'string', Rule::in(PhonePrefix::prefixList())],
-      'phone'  => ['required', "digits:$length", 'unique:users' ],
+      'status' => ['required', 'integer'],
     ];
   }
 

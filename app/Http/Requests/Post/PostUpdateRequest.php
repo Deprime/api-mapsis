@@ -28,23 +28,20 @@ class PostUpdateRequest extends FormRequest
   public function rules()
   {
     return [
-      'status_id'      => [
-        'nullable',
+      'title'       => ['required', 'string'],
+      'description' => ['required', 'string'],
+      'category_id' => [
+        'required',
         'numeric',
-        'exists:post_status,id'
+        'exists:category,id'
       ],
-      'type_id'      => [
-        'nullable',
-        'numeric',
-        'exists:post_type,id'
-      ],
-      'title' => ['nullable', 'string'],
-      'description'  => ['nullable', 'string'],
-      'address'  => ['nullable', 'string'],
-      'suggested_address'  => ['nullable', 'string'],
-      'coords'  => ['nullable', 'string'],
-      'start_at'  => ['nullable', 'string'],
-      'finish_at'  => ['nullable', 'string'],
+      'address'   => ['nullable', 'string'],
+      'coords'    => ['nullable', 'array'],
+      'coords.*'  => ['numeric'],
+      'price'     => ['required', 'numeric'],
+      'suggested_address' => ['nullable', 'string'],
+      // 'start_at'   => ['nullable', 'string'],
+      // 'finish_at'  => ['nullable', 'string'],
     ];
   }
 

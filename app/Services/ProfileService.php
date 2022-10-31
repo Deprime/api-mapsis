@@ -53,7 +53,7 @@ class ProfileService {
    */
   public static function get(User $user): User
   {
-    $user->load(static::RELATIONS);
+    // $user->load(static::RELATIONS);
     return $user;
   }
 

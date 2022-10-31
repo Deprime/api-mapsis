@@ -28,11 +28,18 @@ class PostCreateRequest extends FormRequest
   public function rules()
   {
     return [
-      'title' => ['required', 'string'],
-      'description'  => ['required', 'string'],
-      'address'  => ['nullable', 'string'],
-      'suggested_address'  => ['nullable', 'string'],
-      'coords'  => ['nullable', 'string'],
+      'title'       => ['required', 'string'],
+      'description' => ['required', 'string'],
+      'category_id' => [
+        'required',
+        'numeric',
+        'exists:category,id'
+      ],
+      'address'   => ['nullable', 'string'],
+      'coords'    => ['nullable', 'array'],
+      'coords.*'  => ['numeric'],
+      'price'     => ['required', 'numeric'],
+      'suggested_address' => ['nullable', 'string'],
     ];
   }
 

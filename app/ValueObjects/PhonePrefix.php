@@ -5,20 +5,21 @@ namespace App\ValueObjects;
 class PhonePrefix
 {
   protected static $data = [
-    ["value" => 1, "country" => 'Turkey', "prefix" => '+90'],
-    ["value" => 2, "country" => 'Ukrain', "prefix" => '+380'],
-    ["value" => 3, "country" => 'Russia', "prefix" => '+7'],
+    ["value" => 1, "country" => 'Indonesia', "prefix" => '+62', 'length' => 9],
+    ["value" => 2, "country" => 'Ukrain', "prefix" => '+380', 'length' => 9],
+    ["value" => 3, "country" => 'Russia', "prefix" => '+7', 'length' => 10],
     // ["value" => 4, "country" => 'Kazakhstan', "prefix" => '+7'],
-    ["value" => 5, "country" => 'Belarus', "prefix" => '+375'],
-    ["value" => 6, "country" => 'Kyrgyzstan', "prefix" => '+996'],
-    ["value" => 7, "country" => 'Uzbekistan', "prefix" => '+998'],
-    ["value" => 8, "country" => 'Tajikistan', "prefix" => '+992'],
-    ["value" => 9, "country" => 'Bulgaria', "prefix" => '+359'],
-    ["value" => 10, "country" => 'Lithuania', "prefix" => '+370'],
-    ["value" => 11, "country" => 'Latvia', "prefix" => '+371'],
-    ["value" => 12, "country" => 'Estonia', "prefix" => '+372'],
-    ["value" => 13, "country" => 'Armenia', "prefix" => '+374'],
-    ["value" => 14, "country" => 'Georgia', "prefix" => '+995'],
+    ["value" => 5, "country" => 'Belarus', "prefix" => '+375', 'length' => 9],
+    ["value" => 6, "country" => 'Kyrgyzstan', "prefix" => '+996', 'length' => 9],
+    ["value" => 7, "country" => 'Uzbekistan', "prefix" => '+998', 'length' => 9],
+    ["value" => 8, "country" => 'Tajikistan', "prefix" => '+992', 'length' => 9],
+    ["value" => 9, "country" => 'Bulgaria', "prefix" => '+359', 'length' => 9],
+    ["value" => 10, "country" => 'Lithuania', "prefix" => '+370', 'length' => 8],
+    ["value" => 11, "country" => 'Latvia', "prefix" => '+371', 'length' => 8],
+    ["value" => 12, "country" => 'Estonia', "prefix" => '+372', 'length' => 8],
+    ["value" => 13, "country" => 'Armenia', "prefix" => '+374', 'length' => 8],
+    ["value" => 14, "country" => 'Georgia', "prefix" => '+995', 'length' => 9],
+    ["value" => 15, "country" => 'Turkey', "prefix" => '+90', 'length' => 10],
   ];
 
   /**
@@ -36,5 +37,14 @@ class PhonePrefix
   {
     $prefix_list = array_map(fn($value) => $value['prefix'], self::$data);
     return $prefix_list;
+  }
+
+  /**
+   * Get  phone length by prefix
+   */
+  public static function getLengthByPrefix(string $prefix): string | null
+  {
+    $key = array_search($prefix, array_column(self::$data, 'prefix'));
+    return $key ? self::$data[$key]['length'] : null;
   }
 }
