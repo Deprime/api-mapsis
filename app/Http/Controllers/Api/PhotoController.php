@@ -83,6 +83,9 @@ class PhotoController extends Controller
         $const->aspectRatio();
       })->save($full_path);
 
+      // Add full file path to array for deletion
+      $path_list[] = $full_path;
+
       $bunny_dir_path = "posts/{$post_id}";
       $bunny_path = "posts/{$post_id}/{$image_name}";
 
@@ -91,21 +94,16 @@ class PhotoController extends Controller
 
       $is_poster = ($k === 0 && !$poster) ? 1 : 0;
       $photo_list[] = Photo::create([
-        'post_id' => $post->id,
+        'post_id'   => $post->id,
         'author_id' => $user->id,
-        'name' => $image_name,
         'extension' => $image->extension(),
         'is_poster' => $is_poster,
-        'url' => $bunny_path,
+        'name'      => $image_name,
+        'url'       => $bunny_path,
       ]);
-
-
-      File::delete($full_path);
-      // $img->delete();
-      // Storage::delete($full_path);
     }
 
-    // Storage::delete($path_list);
+    File::delete($path_list);
     return response()->json($photo_list);
   }
 
