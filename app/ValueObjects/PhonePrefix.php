@@ -44,7 +44,14 @@ class PhonePrefix
    */
   public static function getLengthByPrefix(string $prefix): string | null
   {
-    $key = array_search($prefix, array_column(self::$data, 'prefix'));
-    return $key ? self::$data[$key]['length'] : null;
+
+    $record = collect(self::$data)->first(function ($value, $key) use ($prefix) {
+      return $value['prefix'] === $prefix;
+    });
+
+    return $record ? $record['length'] : 10;
+
+    // $key = array_search($prefix, array_column(self::$data, 'prefix'));
+    // return $key ? self::$data[$key]['length'] : null;
   }
 }

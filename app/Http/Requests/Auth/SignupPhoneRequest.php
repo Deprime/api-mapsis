@@ -36,7 +36,7 @@ class SignupPhoneRequest extends FormRequest
 
     return [
       'prefix'   => ['required', 'string', Rule::in(PhonePrefix::prefixList())],
-      'phone'    => ['required', "digits:$length", 'unique:users' ],
+      'phone'    => ['required', "digits:$length", 'unique:users'],
       'password' => ['required', 'min:6'],
       // 'password' => ['required', 'min:6', 'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).+$/'],
     ];
