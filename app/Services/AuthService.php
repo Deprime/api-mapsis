@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 use App\Models\User;
+use Illuminate\Support\Str;
 
 class AuthService {
 
@@ -34,6 +35,7 @@ class AuthService {
    */
   public static function createUserByPhone($phone, $prefix, $password): User
   {
+
     $input = [
       'phone'    => $phone,
       'prefix'   => $prefix,

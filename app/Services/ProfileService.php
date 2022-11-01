@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Hash;
 
 use App\Models\User;
@@ -13,7 +14,7 @@ use \App\Requests\Profile\{
 
 class ProfileService {
 
-  //protected const RELATIONS = ['company', 'realtor_accesses', 'contacts'];
+  protected const RELATIONS = [/*'company', 'realtor_accesses', 'contacts'*/];
 
   /**
    * Update current user profile
@@ -54,5 +55,17 @@ class ProfileService {
   {
     // $user->load(static::RELATIONS);
     return $user;
+  }
+
+  /**
+   * Get relations
+   *
+   * @param User $user
+   * @return Collection
+   */
+  public static function getReferrals(User $user): Collection
+  {
+    $user->load('referrals');
+    return $user->referrals;
   }
 }
