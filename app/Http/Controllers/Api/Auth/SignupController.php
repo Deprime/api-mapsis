@@ -6,7 +6,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
-use App\Helpers\SmsAero;
+use App\Helpers\{
+  SmsAero,
+  HiCall,
+};
 
 use Illuminate\Support\Facades\{
   Hash,
@@ -62,17 +65,13 @@ class SignupController extends Controller
    */
   public function sendSmsCode(SendSmsCodeRequest $request): JsonResponse
   {
-    $input = $request->validated();
+    $input  = $request->validated();
     $number = $input['prefix'] . $input['phone'];
-
-    $code = rand(0,9) . rand(0,9) . rand(0,9) . rand(0,9);
+    $code   = rand(0,9) . rand(0,9) . rand(0,9) . rand(0,9);
 
     if (config('app.env') === "production") {
-      $SmsAero  = new SmsAero(config('smsaero.login'), config('smsaero.api_key'), config('smsaero.sign'));
-      $response = $SmsAero->flashcall($number, $code);
-      // SMS variant
-      // $type     = 'DIRECT';
-      // $response = $SmsAero->send("code: $code", $number, $type);
+      $response = HiCall::call($number);
+      $code = $response['code'];
     }
 
     $sms_code = SmsCode::create([
