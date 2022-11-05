@@ -71,7 +71,13 @@ class SignupController extends Controller
 
     if (config('app.env') === "production") {
       $response = HiCall::call($number);
-      $code = $response['code'];
+
+      if ($response['status'] === 'error') {
+        return response()->json(['error' => 'trottling'], Response::HTTP_TOO_MANY_REQUESTS  );
+      }
+      else {
+        $code = $response['code'];
+      }
     }
 
     $sms_code = SmsCode::create([
