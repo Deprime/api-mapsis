@@ -42,6 +42,7 @@ class Post extends Model
     'published_at',
     'start_at',
     'finish_at',
+    'promoted_at'
   ];
 
   /**

@@ -27,6 +27,7 @@ class CreatePostTable extends Migration
             $table->timestamp('published_at')->nullable()->comment('Event publish datetime');
             $table->timestamp('start_at')->nullable()->comment('Event startdatetime');
             $table->timestamp('finish_at')->nullable()->comment('Event finish datetime');
+            $table->timestamp('promoted_at')->nullable()->comment('Event promotion datetime');
             $table->timestamps();
             $table->softDeletes();
             $table->foreign('category_id')->references('id')->on('category')->onUpdate('set null')->onDelete('set null');
