@@ -20,6 +20,7 @@ class PhonePrefix
     ["value" => 13, "country" => 'Armenia', "prefix" => '+374', 'length' => 8],
     ["value" => 14, "country" => 'Georgia', "prefix" => '+995', 'length' => 9],
     ["value" => 15, "country" => 'Turkey', "prefix" => '+90', 'length' => 10],
+    ["value" => 16, "country" => 'Poland', "prefix" => '+48', 'length' => 9],
   ];
 
   /**
@@ -44,14 +45,9 @@ class PhonePrefix
    */
   public static function getLengthByPrefix(string $prefix): string | null
   {
-
     $record = collect(self::$data)->first(function ($value, $key) use ($prefix) {
       return $value['prefix'] === $prefix;
     });
-
     return $record ? $record['length'] : 10;
-
-    // $key = array_search($prefix, array_column(self::$data, 'prefix'));
-    // return $key ? self::$data[$key]['length'] : null;
   }
 }
