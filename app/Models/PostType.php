@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class PostType extends Model
 {
-  // use SoftDeletes;
+  use HasFactory; // SoftDeletes;
 
   const CUSTOM_DATE_FORMAT = 'd.m.Y';
   protected $table = 'post_type';

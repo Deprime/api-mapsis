@@ -40,4 +40,5 @@ php artisan db:seed
 
 ```terminal
 php artisan db:seed --class UserSeeder
+php artisan db:seed --class PageDemoSeeder
 ```
