@@ -50,6 +50,14 @@ class CurrencyTableSeeder extends Seeder
                 'symbol' => '₺',
                 'title' => 'Turkish Lira',
             ),
+            4 =>
+            array (
+              'code' => 'AMD',
+              'id' => 5,
+              'number' => 051,
+              'symbol' => '֏',
+              'title' => 'Armenian Dram',
+            ),
         ));
 
 

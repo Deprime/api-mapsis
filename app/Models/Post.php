@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Validation\Rule;
@@ -11,14 +12,13 @@ use Vehsamrak\Phpluralize\Pluralizer;
 
 use Illuminate\Database\Eloquent\Relations\{
   HasMany,
-  HasOne,
   BelongsTo,
   BelongsToMany,
 };
 
 class Post extends Model
 {
-  use SoftDeletes;
+  use SoftDeletes, HasFactory;
 
   const CUSTOM_DATE_FORMAT = 'd.m.Y';
   protected $table = 'post';
@@ -64,6 +64,14 @@ class Post extends Model
   public function author(): BelongsTo
   {
     return $this->belongsTo(User::class, 'author_id');
+  }
+
+  /**
+   * Category
+   */
+  public function category(): BelongsTo
+  {
+    return $this->belongsTo(Category::class, 'category_id');
   }
 
   /**
