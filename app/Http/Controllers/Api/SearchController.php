@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Post\PostSearchRequest;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,14 +24,33 @@ class SearchController extends Controller
    * @param  \Illuminate\Http\Request  $request
    * @return \Illuminate\Http\JsonResponse
    */
-  public function list(Request $request): JsonResponse
+  public function posts(PostSearchRequest $request): JsonResponse
   {
-    $post_list = Post::query()
-                      ->with(static::LIST_RELATIONS)
-                      ->published()
-                      ->get();
+    $search = Post::search($request->text);
 
-    return response()->json($post_list);
+    $priseFilter = [];
+
+    if($request->from){
+      $priseFilter[] = 'price >= '. $request->from;
+    }
+
+    if($request->to){
+      $priseFilter[] = 'price <= '. $request->to;
+    }
+
+    $search->with([
+      'numericFilters' => $priseFilter,
+    ]);
+
+    if($request->rad){
+      $search->aroundLatLng($request->lat, $request->lng)
+      ->with([
+        'aroundRadius' => $request->rad,
+      ]);
+    }
+
+    return response()->json($search->get());
+
   }
 
   /**

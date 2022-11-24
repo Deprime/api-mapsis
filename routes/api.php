@@ -41,7 +41,7 @@ Route::namespace('Api')->group(function() {
 
     // Search
     Route::prefix('search')->group(function () {
-      Route::get('/',           [SearchController::class, 'list']);
+      Route::get('/',           [SearchController::class, 'posts']);
       Route::get('/{post_id}',  [SearchController::class, 'get'])->whereNumber('post_id');
     });
 

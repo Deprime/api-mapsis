@@ -42,3 +42,10 @@ php artisan db:seed
 php artisan db:seed --class UserSeeder
 php artisan db:seed --class PageDemoSeeder
 ```
+
+```terminal
+php artisan scout:import "App\Models\Post"
+```
+
+[Algolia Laravel Doc](https://www.algolia.com/doc/framework-integration/laravel/searching/server-side-search/?client=php)
+
