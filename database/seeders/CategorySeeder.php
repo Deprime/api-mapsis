@@ -18,6 +18,7 @@ class CategorySeeder extends Seeder
       DB::table('category')->truncate();
       DB::table('category')->insert([
         [
+          'id'        => 1,
           'slug'      => 'rent',
           'order'     => 'DESC',
           'mui_key'   => 'rent_category',
@@ -25,6 +26,7 @@ class CategorySeeder extends Seeder
           'title_en'  => 'Rent'
         ],
         [
+          'id'        => 2,
           'slug'      => 'events',
           'order'     => 'DESC',
           'mui_key'   => 'events_category',
@@ -32,6 +34,7 @@ class CategorySeeder extends Seeder
           'title_en'  => 'Dating and events'
         ],
         [
+          'id'        => 3,
           'slug'      => 'clubs',
           'order'     => 'DESC',
           'mui_key'   => 'clubs_category',
@@ -39,6 +42,7 @@ class CategorySeeder extends Seeder
           'title_en'  => 'Establishments and clubs'
         ],
         [
+          'id'        => 4,
           'slug'      => 'exchange',
           'order'     => 'DESC',
           'mui_key'   => 'exchange_category',
@@ -46,6 +50,7 @@ class CategorySeeder extends Seeder
           'title_en'  => 'Currency exchange'
         ],
         [
+          'id'        => 5,
           'slug'      => 'beauty_health',
           'order'     => 'DESC',
           'mui_key'   => 'beauty_health_category',
@@ -53,6 +58,7 @@ class CategorySeeder extends Seeder
           'title_en'  => 'Beauty and health'
         ],
         [
+          'id'        => 6,
           'slug'      => 'digital_services',
           'order'     => 'DESC',
           'mui_key'   => 'digital_services_category',
@@ -60,6 +66,7 @@ class CategorySeeder extends Seeder
           'title_en'  => 'Digital services'
         ],
         [
+          'id'        => 7,
           'slug'      => 'trainings',
           'order'     => 'DESC',
           'mui_key'   => 'trainings_category',
@@ -67,6 +74,7 @@ class CategorySeeder extends Seeder
           'title_en'  => 'Trainings and masterclasses'
         ],
         [
+          'id'        => 8,
           'slug'      => 'photo_video',
           'order'     => 'DESC',
           'mui_key'   => 'photo_video_category',
@@ -74,6 +82,7 @@ class CategorySeeder extends Seeder
           'title_en'  => 'Photo and video shooting'
         ],
         [
+          'id'        => 9,
           'slug'      => 'visas_escorts',
           'order'     => 'DESC',
           'mui_key'   => 'visas_escorts_category',
@@ -81,6 +90,7 @@ class CategorySeeder extends Seeder
           'title_en'  => 'Visas and escorts'
         ],
         [
+          'id'        => 10,
           'slug'      => 'goods_shipment',
           'order'     => 'DESC',
           'mui_key'   => 'goods_shipment_category',
@@ -88,6 +98,7 @@ class CategorySeeder extends Seeder
           'title_en'  => 'Shipment of goods'
         ],
         [
+          'id'        => 11,
           'slug'      => 'other',
           'order'     => 'DESC',
           'mui_key'   => 'other_category',

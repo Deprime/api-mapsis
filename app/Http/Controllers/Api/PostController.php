@@ -8,7 +8,6 @@ use Illuminate\Http\{
   JsonResponse,
 };
 use Symfony\Component\HttpFoundation\Response;
-use Illuminate\Support\Facades\Storage;
 
 use \App\Http\Requests\Post\{
   PostCreateRequest,
