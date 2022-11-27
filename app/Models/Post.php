@@ -2,23 +2,21 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Validation\Rule;
-use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 
-use Vehsamrak\Phpluralize\Pluralizer;
+use Laravel\Scout\Searchable;
 
 use Illuminate\Database\Eloquent\Relations\{
   HasMany,
-  HasOne,
   BelongsTo,
   BelongsToMany,
 };
 
 class Post extends Model
 {
-  use SoftDeletes;
+  use SoftDeletes, HasFactory, Searchable;
 
   const CUSTOM_DATE_FORMAT = 'd.m.Y';
   protected $table = 'post';
@@ -42,6 +40,7 @@ class Post extends Model
     'published_at',
     'start_at',
     'finish_at',
+    'promoted_at'
   ];
 
   /**
@@ -58,11 +57,47 @@ class Post extends Model
   ];
 
   /**
+   * Get the indexable data array for the model.
+   *
+   * @return array
+   */
+  public function toSearchableArray()
+  {
+      return [
+        'id' => $this->id,
+        'category_id' => $this->category_id,
+        'status_id' => $this->status->id,
+        'currency_id' => $this->currency_id,
+        'start_at' => $this->start_at->toDateTimeString(),
+        'finish_at' => $this->finish_at->toDateTimeString(),
+        'published_at' => $this->published_at->toDateTimeString(),
+        'deleted_at' => $this->deleted_at ? $this->deleted_at->toDateTimeString() : null,
+        'price' => $this->price,
+        'title' => $this->title,
+        'description' => $this->description,
+        'address' => $this->address,
+        'suggested_address' => $this->suggested_address,
+        '_geoloc' => [
+          'lat' => $this->coords[0],
+          'lng' => $this->coords[1],
+        ],
+      ];
+    }
+
+  /**
    * Author
    */
   public function author(): BelongsTo
   {
     return $this->belongsTo(User::class, 'author_id');
+  }
+
+  /**
+   * Category
+   */
+  public function category(): BelongsTo
+  {
+    return $this->belongsTo(Category::class, 'category_id');
   }
 
   /**

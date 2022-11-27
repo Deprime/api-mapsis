@@ -8,13 +8,12 @@ use App\Http\Controllers\Api\Auth\{
   SignupController,
 };
 
-use App\Http\Controllers\Api\{
+use App\Http\Controllers\Api\{PageController,
   ProfileController,
   PostController,
   PhotoController,
   SearchController,
-  DictionaryController,
-};
+  DictionaryController};
 
 /*
 |--------------------------------------------------------------------------
@@ -42,8 +41,14 @@ Route::namespace('Api')->group(function() {
 
     // Search
     Route::prefix('search')->group(function () {
-      Route::get('/',           [SearchController::class, 'list']);
+      Route::get('/',           [SearchController::class, 'posts']);
       Route::get('/{post_id}',  [SearchController::class, 'get'])->whereNumber('post_id');
+    });
+
+    // Pages
+    Route::prefix('pages')->group(function() {
+      Route::get('/',                 [PageController::class, 'list']);
+      Route::get('/{page_id}',        [PageController::class, 'get'])->whereNumber('page_id');
     });
 
     // Dictionary

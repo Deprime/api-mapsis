@@ -40,8 +40,8 @@ php artisan db:seed
 
 ```terminal
 php artisan db:seed --class UserSeeder
+php artisan db:seed --class PageDemoSeeder
 ```
-
 
 ## Octane
 
@@ -72,3 +72,9 @@ bash ./vendor/bin/sail shell
 ```terminal
 ./vendor/bin/sail artisan sail:publish
 ```
+=======
+```terminal
+php artisan scout:import "App\Models\Post"
+```
+
+[Algolia Laravel Doc](https://www.algolia.com/doc/framework-integration/laravel/searching/server-side-search/?client=php)
