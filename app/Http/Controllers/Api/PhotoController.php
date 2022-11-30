@@ -76,10 +76,17 @@ class PhotoController extends Controller
 
     foreach ($photos as $k => $image) {
       $image_name = $post->id . '-' . time(). $k . '.' . $image->extension();
+      $image_sm_name = $post->id . '-' . time(). $k . '-sm.' . $image->extension();
+
       $img = Image::make($image->path());
+      $imgSm = Image::make($image->path());
 
       $full_path = $file_path . '/' . $image_name;
       $imageFile = $img->resize(1200, 1200, function ($const) {
+        $const->aspectRatio();
+      })->save($full_path);
+
+      $imageSmFile = $imgSm->resize(96, 96, function ($const) {
         $const->aspectRatio();
       })->save($full_path);
 
@@ -88,9 +95,11 @@ class PhotoController extends Controller
 
       $bunny_dir_path = "posts/{$post_id}";
       $bunny_path = "posts/{$post_id}/{$image_name}";
+      $bunny_sm_path = "posts/{$post_id}/{$image_sm_name}";
 
       Storage::disk('bunnycdn')->makeDirectory($bunny_dir_path);
       Storage::disk('bunnycdn')->put($bunny_path, $imageFile);
+      Storage::disk('bunnycdn')->put($bunny_sm_path, $imageSmFile);
 
       $is_poster = ($k === 0 && !$poster) ? 1 : 0;
       $photo_list[] = Photo::create([
