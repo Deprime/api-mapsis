@@ -88,7 +88,7 @@ class PhotoController extends Controller
 
       $imageSmFile = $imgSm->resize(96, 96, function ($const) {
         $const->aspectRatio();
-      })->save($full_path);
+      })->save($full_path, 80);
 
       // Add full file path to array for deletion
       $path_list[] = $full_path;
