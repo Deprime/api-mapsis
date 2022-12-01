@@ -26,7 +26,7 @@ class PostStatusTableSeeder extends Seeder
             array (
                 'id' => 2,
                 'title' => 'Published',
-                'mui_key' => 'Published',
+                'mui_key' => 'published',
             ),
             2 =>
             array (
