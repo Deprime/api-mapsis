@@ -21,6 +21,10 @@ use App\Models\{
   Photo,
 };
 
+use App\Services\{
+  ThumbnailService
+};
+
 class PhotoController extends Controller
 {
   /**
@@ -36,7 +40,10 @@ class PhotoController extends Controller
                       ->get();
 
     if ($photos) {
-      return response()->json($photos);
+      return response()->json([
+        'photos'=> $photos,
+        'max_size' => config('image.max_size')
+      ]);
     }
     return response()->json([], Response::HTTP_NOT_FOUND);
   }
@@ -69,37 +76,23 @@ class PhotoController extends Controller
       ->where('is_poster', 1)
       ->first();
 
-    // Files processing
-    $file_path  = public_path('/thumbs');
-    $path_list  = [];
+    $bunny_dir_path = "posts/{$post_id}";
+    Storage::disk('bunnycdn')->makeDirectory($bunny_dir_path);
+
     $photo_list = [];
 
     foreach ($photos as $k => $image) {
-      $image_name = $post->id . '-' . time(). $k . '.' . $image->extension();
-      $image_sm_name = $post->id . '-' . time(). $k . '-sm.' . $image->extension();
 
-      $img = Image::make($image->path());
-      $imgSm = Image::make($image->path());
+      $extension = $image->extension();
+      $time      = time();
 
-      $full_path = $file_path . '/' . $image_name;
-      $imageFile = $img->resize(1200, 1200, function ($const) {
-        $const->aspectRatio();
-      })->save($full_path);
+      // Files processing by service
+      $name = $post_id . '-' . $time . $k . '.' . $extension;
+      $bunny_path = ThumbnailService::upload($post->id, 1200, 1200, $image->path(), $name);
 
-      $imageSmFile = $imgSm->resize(96, 96, function ($const) {
-        $const->aspectRatio();
-      })->save($full_path, 80);
-
-      // Add full file path to array for deletion
-      $path_list[] = $full_path;
-
-      $bunny_dir_path = "posts/{$post_id}";
-      $bunny_path = "posts/{$post_id}/{$image_name}";
-      $bunny_sm_path = "posts/{$post_id}/{$image_sm_name}";
-
-      Storage::disk('bunnycdn')->makeDirectory($bunny_dir_path);
-      Storage::disk('bunnycdn')->put($bunny_path, $imageFile);
-      Storage::disk('bunnycdn')->put($bunny_sm_path, $imageSmFile);
+      // Small 96*96 File process
+      $thumbnail_name = $post_id . '-' . $time . $k . '-sm.' . $extension;
+      ThumbnailService::upload($post->id, 96, 96, $image->path(), $thumbnail_name);
 
       $is_poster = ($k === 0 && !$poster) ? 1 : 0;
       $photo_list[] = Photo::create([
@@ -107,12 +100,11 @@ class PhotoController extends Controller
         'author_id' => $user->id,
         'extension' => $image->extension(),
         'is_poster' => $is_poster,
-        'name'      => $image_name,
+        'name'      => $name,
         'url'       => $bunny_path,
       ]);
     }
 
-    File::delete($path_list);
     return response()->json($photo_list);
   }
 
