@@ -78,3 +78,8 @@ php artisan scout:import "App\Models\Post"
 ```
 
 [Algolia Laravel Doc](https://www.algolia.com/doc/framework-integration/laravel/searching/server-side-search/?client=php)
+
+
+```terminal
+ngrok http api-mapsis.local:8091
+```

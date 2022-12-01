@@ -27,9 +27,12 @@ class PhotoCreateRequest extends FormRequest
    */
   public function rules()
   {
+
+    $max = config('image.max_size') / 1024;
+
     return [
       'photos' => ['required', 'array',],
-      'photos.*' => ['required', 'image', 'mimes:jpg,jpeg,png', 'max:5120',],
+      'photos.*' => ['required', 'image', 'mimes:jpg,jpeg,png', 'max:'.$max ,],
       // '*' => ['required','image', 'mimes:jpg,jpeg,png', 'max:3072',],
     ];
   }
