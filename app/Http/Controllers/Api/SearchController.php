@@ -31,26 +31,31 @@ class SearchController extends Controller
     $priseFilter = [];
 
     if($request->from){
-      $priseFilter[] = 'price >= '. $request->from;
+      $priseFilter[] = 'price >= '. $request->min_price;
     }
 
     if($request->to){
-      $priseFilter[] = 'price <= '. $request->to;
+      $priseFilter[] = 'price <= '. $request->max_price;
     }
 
     $search->with([
       'numericFilters' => $priseFilter,
     ]);
 
-    if($request->rad){
+    if ($request->rad) {
       $search->aroundLatLng($request->lat, $request->lng)
       ->with([
         'aroundRadius' => $request->rad,
       ]);
     }
 
-    return response()->json($search->get());
+    $post_list = $search->get();
+    // FIXME: this is totally shit ) But I don't know how to make it right way
+    $post_list->each(function ($item, $key) use ($post_list) {
+      $post_list[$key]->load(static::LIST_RELATIONS);
+    });
 
+    return response()->json($post_list);
   }
 
   /**
