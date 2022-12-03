@@ -20,7 +20,7 @@ class CategorySeeder extends Seeder
         [
           'id'        => 1,
           'slug'      => 'rent',
-          'order'     => 'DESC',
+          'order'     => 1,
           'mui_key'   => 'rent_category',
           'title_ru'  => 'Аренда',
           'title_en'  => 'Rent'
@@ -28,7 +28,7 @@ class CategorySeeder extends Seeder
         [
           'id'        => 2,
           'slug'      => 'events',
-          'order'     => 'DESC',
+          'order'     => 2,
           'mui_key'   => 'events_category',
           'title_ru'  => 'Знакомства и мероприятия',
           'title_en'  => 'Dating and events'
@@ -36,7 +36,7 @@ class CategorySeeder extends Seeder
         [
           'id'        => 3,
           'slug'      => 'clubs',
-          'order'     => 'DESC',
+          'order'     => 3,
           'mui_key'   => 'clubs_category',
           'title_ru'  => 'Заведения и клубы',
           'title_en'  => 'Establishments and clubs'
@@ -44,7 +44,7 @@ class CategorySeeder extends Seeder
         [
           'id'        => 4,
           'slug'      => 'exchange',
-          'order'     => 'DESC',
+          'order'     => 4,
           'mui_key'   => 'exchange_category',
           'title_ru'  => 'Обмен валюты',
           'title_en'  => 'Currency exchange'
@@ -52,7 +52,7 @@ class CategorySeeder extends Seeder
         [
           'id'        => 5,
           'slug'      => 'beauty_health',
-          'order'     => 'DESC',
+          'order'     => 5,
           'mui_key'   => 'beauty_health_category',
           'title_ru'  => 'Красота и здоровье',
           'title_en'  => 'Beauty and health'
@@ -60,7 +60,7 @@ class CategorySeeder extends Seeder
         [
           'id'        => 6,
           'slug'      => 'digital_services',
-          'order'     => 'DESC',
+          'order'     => 6,
           'mui_key'   => 'digital_services_category',
           'title_ru'  => 'Цифровые услуги',
           'title_en'  => 'Digital services'
@@ -68,7 +68,7 @@ class CategorySeeder extends Seeder
         [
           'id'        => 7,
           'slug'      => 'trainings',
-          'order'     => 'DESC',
+          'order'     => 7,
           'mui_key'   => 'trainings_category',
           'title_ru'  => 'Тренинги и мастерклассы',
           'title_en'  => 'Trainings and masterclasses'
@@ -76,7 +76,7 @@ class CategorySeeder extends Seeder
         [
           'id'        => 8,
           'slug'      => 'photo_video',
-          'order'     => 'DESC',
+          'order'     => 8,
           'mui_key'   => 'photo_video_category',
           'title_ru'  => 'Фото и видео съемка',
           'title_en'  => 'Photo and video shooting'
@@ -84,7 +84,7 @@ class CategorySeeder extends Seeder
         [
           'id'        => 9,
           'slug'      => 'visas_escorts',
-          'order'     => 'DESC',
+          'order'     => 9,
           'mui_key'   => 'visas_escorts_category',
           'title_ru'  => 'Визы и сопровождение',
           'title_en'  => 'Visas and escorts'
@@ -92,7 +92,7 @@ class CategorySeeder extends Seeder
         [
           'id'        => 10,
           'slug'      => 'goods_shipment',
-          'order'     => 'DESC',
+          'order'     => 10,
           'mui_key'   => 'goods_shipment_category',
           'title_ru'  => 'Отправка грузов',
           'title_en'  => 'Shipment of goods'
@@ -100,7 +100,7 @@ class CategorySeeder extends Seeder
         [
           'id'        => 11,
           'slug'      => 'other',
-          'order'     => 'DESC',
+          'order'     => 11,
           'mui_key'   => 'other_category',
           'title_ru'  => 'Другое',
           'title_en'  => 'Other'
