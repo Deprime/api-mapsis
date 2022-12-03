@@ -33,6 +33,8 @@ class PostSearchRequest extends FormRequest
         'rad'  => ['nullable', 'numeric'],
         'lat'  => ['required_with:rad', 'numeric'],
         'lng'  => ['required_with:rad', 'numeric'],
+        'p1' => ['required_with:p2', 'string',],
+        'p2' => ['required_with:p1', 'string',]
       ];
     }
 
