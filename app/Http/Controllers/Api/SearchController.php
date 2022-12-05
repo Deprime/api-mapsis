@@ -26,15 +26,15 @@ class SearchController extends Controller
    */
   public function posts(PostSearchRequest $request): JsonResponse
   {
-    $search = Post::search($request->text);
+    $search = Post::search($request->text)->query(fn ($query) => $query->with(static::LIST_RELATIONS));
 
     $priseFilter = [];
 
-    if($request->from){
+    if($request->min_price){
       $priseFilter[] = 'price >= '. $request->min_price;
     }
 
-    if($request->to){
+    if($request->max_price){
       $priseFilter[] = 'price <= '. $request->max_price;
     }
 
@@ -42,18 +42,28 @@ class SearchController extends Controller
       'numericFilters' => $priseFilter,
     ]);
 
-    if ($request->rad) {
+    if ($request->radius) {
       $search->aroundLatLng($request->lat, $request->lng)
       ->with([
-        'aroundRadius' => $request->rad,
+        'aroundRadius' => $request->radius,
+      ]);
+    }elseif ($request->point_top_left and $request->point_bottom_right){
+      $point_top_left = explode(",", $request->point_top_left);
+      $point_bottom_right = explode(",", $request->point_bottom_right);
+
+      $boundingBox = [
+       floatval($point_top_left[0]),
+       floatval($point_top_left[1]),
+       floatval($point_bottom_right[0]),
+       floatval($point_bottom_right[1])
+      ];
+
+      $search->with([
+        'insideBoundingBox' => [$boundingBox],
       ]);
     }
 
     $post_list = $search->get();
-    // FIXME: this is totally shit ) But I don't know how to make it right way
-    $post_list->each(function ($item, $key) use ($post_list) {
-      $post_list[$key]->load(static::LIST_RELATIONS);
-    });
 
     return response()->json($post_list);
   }

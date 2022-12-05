@@ -84,3 +84,9 @@ php artisan scout:import "App\Models\Post"
 ```terminal
 ngrok http api-mapsis.local:8091
 ```
+
+For running scheduled jobs please following [tutorial](https://laravel.com/docs/9.x/scheduling#running-the-scheduler)
+
+```terminal
+php artisan schedule:list
+```
