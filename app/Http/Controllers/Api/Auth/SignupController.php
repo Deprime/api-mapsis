@@ -6,10 +6,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
-use App\Helpers\{
-  SmsAero,
-  HiCall,
-};
 
 use Illuminate\Support\Facades\{
   Hash,
