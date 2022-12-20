@@ -47,7 +47,7 @@ class DictionaryController extends Controller
    */
   public function categoryList(Request $request): JsonResponse
   {
-    $category_list = Category::query()->get();
+    $category_list = Category::query()->orderBy('order')->get();
     return response()->json($category_list, Response::HTTP_OK);
   }
 }

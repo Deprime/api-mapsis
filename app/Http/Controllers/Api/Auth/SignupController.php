@@ -6,10 +6,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
-use App\Helpers\{
-  SmsAero,
-  HiCall,
-};
 
 use Illuminate\Support\Facades\{
   Hash,
@@ -20,12 +16,11 @@ use Illuminate\Support\Facades\{
 use App\Services\{
   AuthService,
   ProfileService,
+  PhoneValidationService,
 };
 
-use App\Http\Requests\Auth\{
+use App\Http\Requests\Signup\{
   SignupEmailRequest,
-  SendSmsCodeRequest,
-  ValidatePhoneRequest,
   SignupPhoneRequest,
 };
 
@@ -57,64 +52,6 @@ class SignupController extends Controller
     return response()->json(['token' => $token]);
   }
 
-
-  /**
-   * Send sms code
-   * @param  \Illuminate\Http\Request  $request
-   * @return \Illuminate\Http\JsonResponse
-   */
-  public function sendSmsCode(SendSmsCodeRequest $request): JsonResponse
-  {
-    $input  = $request->validated();
-    $number = $input['prefix'] . $input['phone'];
-    $code   = rand(0,9) . rand(0,9) . rand(0,9) . rand(0,9);
-
-    if (config('app.env') === "production") {
-      $response = HiCall::call($number);
-
-      if ($response['status'] === 'error') {
-        return response()->json(['error' => 'trottling'], Response::HTTP_TOO_MANY_REQUESTS  );
-      }
-      else {
-        $code = $response['code'];
-      }
-    }
-
-    $sms_code = SmsCode::create([
-      'prefix' => $input['prefix'],
-      'phone'  => $input['phone'],
-      'code'   => $code,
-    ]);
-
-    return response()->json([
-      'phone' => $input['prefix'] . $input['phone'],
-      'code'  => config('app.env') === "production" ? "sent" : $code,
-    ]);
-  }
-
-  /**
-   * Validate phone
-   * @param  \Illuminate\Http\Request  $request
-   * @return \Illuminate\Http\JsonResponse
-   */
-  public function validatePhone(ValidatePhoneRequest $request): JsonResponse
-  {
-    $input = $request->validated();
-    $number = $input['prefix'] . $input['phone'];
-
-    $sms_code = SmsCode::query()
-      ->where('code', $input['code'])
-      ->where('phone', $input['phone'])
-      ->where('prefix', $input['prefix'])
-      ->first();
-
-    if ($sms_code) {
-      $sms_code->update(['validated_at' => date("Y-m-d H:i:s")]);
-      return response()->json($sms_code);
-    }
-    return response()->json([], Response::HTTP_NOT_FOUND);
-  }
-
   /**
    * Signup via phone
    * @param  \Illuminate\Http\Request  $request
@@ -142,7 +79,7 @@ class SignupController extends Controller
 
       // Delete all user's validation codes
       SmsCode::query()
-        ->where('phone', $input['phone'])
+        ->where('phone',  $input['phone'])
         ->where('prefix', $input['prefix'])
         ->delete();
 

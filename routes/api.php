@@ -6,14 +6,18 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\Auth\{
   SigninController,
   SignupController,
+  VerificationController,
+  AccessRestoreController,
 };
 
-use App\Http\Controllers\Api\{PageController,
+use App\Http\Controllers\Api\{
+  PageController,
   ProfileController,
   PostController,
   PhotoController,
   SearchController,
-  DictionaryController};
+  DictionaryController
+};
 
 /*
 |--------------------------------------------------------------------------
@@ -35,8 +39,10 @@ Route::namespace('Api')->group(function() {
 
       Route::post('signup-email',   [SignupController::class, 'signupEmail']);
       Route::post('signup-phone',   [SignupController::class, 'signupPhone']);
-      Route::post('send-sms-code',  [SignupController::class, 'sendSmsCode']);
-      Route::post('validate-phone', [SignupController::class, 'validatePhone']);
+
+      Route::post('send-validation-code',   [VerificationController::class, 'sendValidationCode']);
+      Route::post('verify-validation-code', [VerificationController::class, 'verifyValidationCode']);
+      Route::post('restore-password', [AccessRestoreController::class, 'restorePasswordByPhone']);
     });
 
     // Search
@@ -47,14 +53,14 @@ Route::namespace('Api')->group(function() {
 
     // Pages
     Route::prefix('pages')->group(function() {
-      Route::get('/',                 [PageController::class, 'list']);
-      Route::get('/{page_id}',        [PageController::class, 'get'])->whereNumber('page_id');
+      Route::get('/',           [PageController::class, 'list']);
+      Route::get('/{page_id}',  [PageController::class, 'get'])->whereNumber('page_id');
     });
 
     // Dictionary
     Route::prefix('dictionary')->group(function () {
-      Route::get('phone-prefix-list',   [DictionaryController::class, 'phonePrefixList']);
-      Route::get('category-list',   [DictionaryController::class, 'categoryList']);
+      Route::get('phone-prefix-list', [DictionaryController::class, 'phonePrefixList']);
+      Route::get('category-list',     [DictionaryController::class, 'categoryList']);
     });
 
     // Application

@@ -19,7 +19,7 @@ use App\Services\{
   ProfileService,
 };
 
-use App\Http\Requests\Auth\{
+use App\Http\Requests\Signin\{
   SigninRequest,
   SigninByPhoneRequest,
 };
@@ -81,7 +81,7 @@ class SigninController extends Controller
         'user'  => $user,
       ]);
     }
-    return response()->json([], Response::HTTP_NOT_FOUND);
+    return response()->json(['error' => 'The provided credentials are incorrect.'], Response::HTTP_UNAUTHORIZED);
   }
 
   /**

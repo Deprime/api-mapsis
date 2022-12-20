@@ -44,18 +44,19 @@ class SearchController extends Controller
 
     if ($request->radius) {
       $search->aroundLatLng($request->lat, $request->lng)
-      ->with([
-        'aroundRadius' => $request->radius,
-      ]);
-    }elseif ($request->point_top_left and $request->point_bottom_right){
+        ->with([
+          'aroundRadius' => $request->radius,
+        ]);
+    }
+    elseif ($request->point_top_left and $request->point_bottom_right){
       $point_top_left = explode(",", $request->point_top_left);
       $point_bottom_right = explode(",", $request->point_bottom_right);
 
       $boundingBox = [
-       floatval($point_top_left[0]),
-       floatval($point_top_left[1]),
-       floatval($point_bottom_right[0]),
-       floatval($point_bottom_right[1])
+        floatval($point_top_left[0]),
+        floatval($point_top_left[1]),
+        floatval($point_bottom_right[0]),
+        floatval($point_bottom_right[1]),
       ];
 
       $search->with([
