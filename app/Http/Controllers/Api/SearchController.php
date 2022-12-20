@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Helpers\ElasticSearchQuery\GeoBoundingBox;
+use App\Helpers\ElasticSearchQuery\GeoDistance;
+use App\Helpers\ElasticSearchQuery\Range;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Post\PostSearchRequest;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
-
-use Illuminate\Support\Facades\Storage;
 
 use App\Models\{
   Post,
@@ -28,40 +29,24 @@ class SearchController extends Controller
   {
     $search = Post::search($request->text)->query(fn ($query) => $query->with(static::LIST_RELATIONS));
 
-    $priseFilter = [];
-
-    if($request->min_price){
-      $priseFilter[] = 'price >= '. $request->min_price;
+    if ($request->min_price || $request->max_price) {
+      $search->must(new Range('price', $request->min_price, $request->max_price));
     }
-
-    if($request->max_price){
-      $priseFilter[] = 'price <= '. $request->max_price;
-    }
-
-    $search->with([
-      'numericFilters' => $priseFilter,
-    ]);
 
     if ($request->radius) {
-      $search->aroundLatLng($request->lat, $request->lng)
-        ->with([
-          'aroundRadius' => $request->radius,
-        ]);
+      $search->filter(new GeoDistance($request->radius, $request->lat, $request->lng));
     }
+
     elseif ($request->point_top_left and $request->point_bottom_right){
       $point_top_left = explode(",", $request->point_top_left);
       $point_bottom_right = explode(",", $request->point_bottom_right);
 
-      $boundingBox = [
+      $search->filter(new GeoBoundingBox(
         floatval($point_top_left[0]),
         floatval($point_top_left[1]),
         floatval($point_bottom_right[0]),
         floatval($point_bottom_right[1]),
-      ];
-
-      $search->with([
-        'insideBoundingBox' => [$boundingBox],
-      ]);
+      ));
     }
 
     $post_list = $search->get();

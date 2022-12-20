@@ -38,12 +38,13 @@ class PostSearchRequest extends FormRequest
       ];
     }
 
-  /**
-   * Fail validation response
-   * @param Illuminate\Contracts\Validation\Validator
-   * @throws Illuminate\Http\Exceptions\HttpResponseException
-   */
-  protected function failedValidation(Validator $validator) {
-    throw new HttpResponseException(response()->json($validator->errors(), Response::HTTP_UNAUTHORIZED));
-  }
+
+    /**
+     * Fail validation response
+     * @param Illuminate\Contracts\Validation\Validator
+     * @throws Illuminate\Http\Exceptions\HttpResponseException
+     */
+    protected function failedValidation(Validator $validator) {
+      throw new HttpResponseException(response()->json($validator->errors(), Response::HTTP_UNAUTHORIZED));
+    }
 }
