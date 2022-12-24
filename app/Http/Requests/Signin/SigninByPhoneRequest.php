@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Auth;
+namespace App\Http\Requests\Signin;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
@@ -12,7 +12,7 @@ use App\ValueObjects\{
   PhonePrefix,
 };
 
-class ValidatePhoneRequest extends FormRequest
+class SigninByPhoneRequest extends FormRequest
 {
   /**
    * Determine if the user is authorized to make this request.
@@ -35,9 +35,9 @@ class ValidatePhoneRequest extends FormRequest
     $length = PhonePrefix::getLengthByPrefix($prefix);
 
     return [
-      'prefix' => ['required', 'string', Rule::in(PhonePrefix::prefixList())],
-      'phone'  => ['required', "digits:$length", 'unique:users' ],
-      'code'  => ['required', 'digits:4'],
+      'prefix'   => ['required', 'string', Rule::in(PhonePrefix::prefixList())],
+      'phone'    => ['required', "digits:$length",],
+      'password' => ['required'],
     ];
   }
 

@@ -1,14 +1,21 @@
 <?php
 
-namespace App\Http\Requests\Auth;
+namespace App\Http\Requests\Signup;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Validation\Rule;
 
-class SigninRequest extends FormRequest
+use App\ValueObjects\{
+  PhonePrefix,
+};
+
+class SignupPhoneRequest extends FormRequest
 {
+  protected const PHONE_MODEL = 'App\Models\User';
+
   /**
    * Determine if the user is authorized to make this request.
    *
@@ -26,9 +33,21 @@ class SigninRequest extends FormRequest
    */
   public function rules()
   {
+    $prefix = $this->prefix;
+    $length = $prefix ? PhonePrefix::getLengthByPrefix($prefix) : 9;
+
+    $phone_rules = ['required', "digits:$length"];
+    if ($prefix) {
+      $phone_rules[] = Rule::unique(static::PHONE_MODEL)
+        ->where(function ($query) use ($prefix) {
+          return $query->where('prefix', $prefix);
+        });
+    }
+
     return [
-      'email'    => ['required', 'string', 'email:rfc,strict'],
-      'password' => ['required', 'min:6', ],
+      'prefix'   => ['required', 'string', Rule::in(PhonePrefix::prefixList())],
+      'phone'    => $phone_rules,
+      'password' => ['required', 'min:6'],
     ];
   }
 

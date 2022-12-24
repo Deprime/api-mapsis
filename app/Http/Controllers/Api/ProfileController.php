@@ -62,7 +62,6 @@ class ProfileController extends Controller
     return response()->json(['user' => $user]);
   }
 
-
   /**
    * Change password
    *
@@ -78,25 +77,6 @@ class ProfileController extends Controller
     $user = ProfileService::get($user);
 
     return response()->json(['user' => $user]);
-  }
-
-
-
-  /**
-   * Get realtor access list
-   *
-   * @param  \Illuminate\Http\Request $request
-   * @return \Illuminate\Http\JsonResponse
-   */
-  public function realtorAccessList(Request $request): JsonResponse
-  {
-    $user = $request->user();
-    $realtor_access_list = RealtorAccess::query()
-      ->with(['company'])
-      ->where('user_id', $user->id)
-      ->get();
-
-    return response()->json(['realtor_access_list' => $realtor_access_list]);
   }
 
   /**

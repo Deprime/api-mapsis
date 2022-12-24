@@ -26,7 +26,6 @@ class AuthService {
     return User::create($input);
   }
 
-
   /**
    * Create user by phone
    * @param string $phone
@@ -35,14 +34,12 @@ class AuthService {
    */
   public static function createUserByPhone($phone, $prefix, $password): User
   {
-
     $input = [
       'phone'    => $phone,
       'prefix'   => $prefix,
       'password' => Hash::make($password),
       'phone_verified_at' => date("Y-m-d H:i:s"),
     ];
-
     return User::create($input);
   }
 
@@ -85,6 +82,18 @@ class AuthService {
       ->where('prefix', $prefix)
       ->where('phone', $phone)
       ->first();
+    return $user;
+  }
+
+  /**
+   * Change password
+   * @param User $user
+   * @param string $password
+   * @return User $user | null
+   */
+  public static function changePassword(User $user, string $password) {
+    $input = ['password' => Hash::make($password)];
+    $user->update($input);
     return $user;
   }
 }

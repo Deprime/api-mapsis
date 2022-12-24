@@ -25,7 +25,7 @@ use App\Models\{
 class PostController extends Controller
 {
   protected const LIST_RELATIONS = ['author', 'status', 'poster'];
-  protected const ITEM_RELATIONS = ['author', 'status', 'photos'];
+  protected const ITEM_RELATIONS = ['author', 'status', 'photos', 'category'];
 
   /**
    * List
