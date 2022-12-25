@@ -37,8 +37,8 @@ class AccessRestoreController extends Controller
 {
   /**
    * restore user password
-   * @param  \Illuminate\Http\Request  $request
-   * @return \Illuminate\Http\JsonResponse
+   * @param RestorePasswordByPhoneRequest $request
+   * @return JsonResponse
    */
   public function restorePasswordByPhone(RestorePasswordByPhoneRequest $request): JsonResponse
   {

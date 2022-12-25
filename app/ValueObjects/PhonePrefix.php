@@ -6,7 +6,7 @@ class PhonePrefix
 {
   protected static $data = [
     ["value" => 1, "country" => 'Indonesia', "prefix" => '+62', 'length' => 11],
-    ["value" => 2, "country" => 'Ukrain', "prefix" => '+380', 'length' => 9],
+    ["value" => 2, "country" => 'Ukraine', "prefix" => '+380', 'length' => 9],
     ["value" => 3, "country" => 'Russia', "prefix" => '+7', 'length' => 10],
     // ["value" => 4, "country" => 'Kazakhstan', "prefix" => '+7'],
     ["value" => 5, "country" => 'Belarus', "prefix" => '+375', 'length' => 9],
