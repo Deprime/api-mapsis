@@ -59,6 +59,6 @@ class SigninTest extends TestCase
 
     $response = $this->json('DELETE', 'api/v1/auth/logout');
 
-    $response->assertOk();
+    $response->assertNoContent();
   }
 }
