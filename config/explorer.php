@@ -17,7 +17,7 @@ return [
           'password' => env('ES_PASSWORD', '')
         ],
         'ssl' => [
-          'verify' => 'C://http_ca.crt',
+          'verify' => env('ES_CERT_PATH',),
         ],
     ],
 

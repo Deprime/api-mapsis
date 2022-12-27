@@ -95,6 +95,6 @@ class SigninController extends Controller
     if ($user) {
       AuthService::revokeToken($user);
     }
-    return response()->json([], Response::HTTP_OK);
+    return response()->json([], Response::HTTP_NO_CONTENT);
   }
 }
