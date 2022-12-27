@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+use JeroenG\Explorer\Application\Explored;
 use Laravel\Scout\Searchable;
 
 use Illuminate\Database\Eloquent\Relations\{
@@ -14,7 +15,7 @@ use Illuminate\Database\Eloquent\Relations\{
   BelongsToMany,
 };
 
-class Post extends Model
+class Post extends Model implements Explored
 {
   use SoftDeletes, HasFactory, Searchable;
 
@@ -56,6 +57,26 @@ class Post extends Model
     // 'published_at' => 'date:' . self::CUSTOM_DATE_FORMAT,
   ];
 
+  public function mappableAs(): array
+  {
+    return [
+      'id' => 'keyword',
+      'category_id' => 'integer',
+      'status_id' => 'integer',
+      'currency_id' => 'integer',
+      'start_at' => 'date',
+      'finish_at' => 'date',
+      'published_at' => 'date',
+      'deleted_at' => 'date',
+      'price' => 'float',
+      'title' => 'text',
+      'description' => 'text',
+      'address' => 'text',
+      'suggested_address' => 'text',
+      'location' => 'geo_point'
+    ];
+  }
+
   /**
    * Get the indexable data array for the model.
    *
@@ -77,12 +98,12 @@ class Post extends Model
         'description' => $this->description,
         'address' => $this->address,
         'suggested_address' => $this->suggested_address,
-        '_geoloc' => [
+        'location' => [
           'lat' => $this->coords[0],
           'lng' => $this->coords[1],
         ],
       ];
-    }
+  }
 
   /**
    * Author

@@ -6,11 +6,10 @@
     "license": "MIT",
     "require": {
         "php": "^8.0.2",
-        "algolia/algoliasearch-client-php": "^3.3",
-        "algolia/scout-extended": "2.0",
         "doctrine/dbal": "^3.5",
         "guzzlehttp/guzzle": "^7.2",
         "intervention/image": "^2.7",
+        "jeroen-g/explorer": "^3.3",
         "kitloong/laravel-migrations-generator": "^6.4",
         "laravel/framework": "^9.19",
         "laravel/octane": "^1.3",
