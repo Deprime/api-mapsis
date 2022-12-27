@@ -32,6 +32,7 @@ class PostUpdateStatusRequest extends FormRequest
     ];
   }
 
+
   /**
    * Fail validation response
    * @param Illuminate\Contracts\Validation\Validator
