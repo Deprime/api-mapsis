@@ -62,7 +62,7 @@ class AuthService {
    * @param User $user
    * @return boolean
    */
-  public static function revokeToken(User $user): boolean
+  public static function revokeToken(User $user): bool
   {
     if ($user->currentAccessToken()) {
       $user->currentAccessToken()->delete();
