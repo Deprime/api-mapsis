@@ -18,9 +18,3 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-
-Route::prefix('auth')->group(function () {
-  Route::get('telegram',           [OAuthController::class, 'signupByTelegram']);
-  Route::get('telegram/callback',  [SignupController::class, 'signupTelegram']);
-});
-
