@@ -107,7 +107,8 @@ class SignupController extends Controller
     $data_check_arr = [];
 
     foreach ($input as $key => $value) {
-      $data_check_arr[] = $key . '=' . $value;
+      if($key != 'hash')
+        $data_check_arr[] = $key . '=' . $value;
     }
 
     sort($data_check_arr);
