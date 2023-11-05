@@ -32,12 +32,12 @@ class SignupTelegramRequest extends FormRequest
   public function rules()
   {
     return [
-      'id'          => ['required', 'digits'],
+      'id'          => ['required', 'numeric'],
       'first_name'  => ['required', 'string'],
       'last_name'   => ['required', 'string'],
       'username'    => ['required', 'string'],
       'photo_url'   => ['required', 'string'],
-      'auth_date'   => ['required', 'digits'],
+      'auth_date'   => ['required', 'numeric'],
       'hash'        => ['required', 'string'],
     ];
   }
