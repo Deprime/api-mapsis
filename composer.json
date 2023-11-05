@@ -15,11 +15,8 @@
         "laravel/octane": "^2.0",
         "laravel/sanctum": "^3.2",
         "laravel/scout": "^9.4",
-        "laravel/socialite": "^5.10",
         "laravel/tinker": "^2.7",
         "platformcommunity/flysystem-bunnycdn": "^3.2",
-        "socialiteproviders/google": "^4.1",
-        "socialiteproviders/telegram": "^4.1",
         "spiral/roadrunner-cli": "^2.5.0",
         "spiral/roadrunner-http": "^3.0.1",
         "vehsamrak/phpluralize": "^1.0"
