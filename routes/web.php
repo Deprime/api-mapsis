@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\Auth\SignupController;
 use App\Http\Controllers\Web\OAuthController;
 use Illuminate\Support\Facades\Route;
 
@@ -20,6 +21,6 @@ Route::get('/', function () {
 
 Route::prefix('auth')->group(function () {
   Route::get('telegram',           [OAuthController::class, 'signupByTelegram']);
-  Route::post('telegram/callback', [OAuthController::class, 'signupByTelegramCallback']);
+  Route::get('telegram/callback',  [SignupController::class, 'signupTelegram']);
 });
 

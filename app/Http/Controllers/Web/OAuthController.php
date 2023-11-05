@@ -15,15 +15,4 @@ class OAuthController extends Controller
   {
     return Socialite::driver('telegram')->redirect();
   }
-
-  public function signupByTelegramCallback(Request $request)
-  {
-   // dd($request);
-
-    $fp = fopen('file.txt', 'w');
-    fwrite($fp, $request->id);
-    fclose($fp);
-  }
-
-
 }
