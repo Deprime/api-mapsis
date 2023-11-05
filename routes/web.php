@@ -19,7 +19,7 @@ Route::get('/', function () {
 });
 
 Route::prefix('auth')->group(function () {
-  Route::get('tlg',         [OAuthController::class, 'signupByTelegram']);
-  Route::post('tlgCallback', [OAuthController::class, 'signupByTelegramCallback']);
+  Route::get('telegram',           [OAuthController::class, 'signupByTelegram']);
+  Route::post('telegram/callback', [OAuthController::class, 'signupByTelegramCallback']);
 });
 
