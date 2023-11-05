@@ -70,7 +70,10 @@ class User extends Authenticatable
     'role',
     'avatar_url',
     'referal_parent_id',
-    'referal_connected_at'
+    'referal_connected_at',
+    'tg_user_id',
+    'tg_username',
+    'google_user_id'
   ];
 
   /**
