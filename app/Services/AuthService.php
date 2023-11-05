@@ -56,7 +56,7 @@ class AuthService {
   public static function createUserByTelegram(string $tg_user_id,string $first_name,string $last_name,string $tg_username, string $password,string $photo_url): User
   {
     $input = [
-      'phone'       => $tg_user_id,
+      'tg_user_id'  => $tg_user_id,
       'first_name'  => $first_name,
       'last_name'   => $last_name,
       'tg_username' => $tg_username,

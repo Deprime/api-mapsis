@@ -36,9 +36,9 @@ class CreateUsersTable extends Migration
             $table->boolean('is_active')->default(true);
             $table->unsignedInteger('referal_parent_id')->nullable();
             $table->timestamp('referal_connected_at')->nullable();
-            $table->string('tg_user_id')->unique('tg_user_id');
-            $table->string('tg_username')->unique('tg_username');
-            $table->string('google_user_id')->unique('google_user_id');
+            $table->string('tg_user_id')->unique('tg_user_id')->nullable();
+            $table->string('tg_username')->unique('tg_username')->nullable();
+            $table->string('google_user_id')->unique('google_user_id')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
