@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-use JeroenG\Explorer\Application\Explored;
 use Laravel\Scout\Searchable;
 
 use Illuminate\Database\Eloquent\Relations\{
@@ -15,7 +14,7 @@ use Illuminate\Database\Eloquent\Relations\{
   BelongsToMany,
 };
 
-class Post extends Model implements Explored
+class Post extends Model
 {
   use SoftDeletes, HasFactory, Searchable;
 
@@ -98,7 +97,7 @@ class Post extends Model implements Explored
         'description' => $this->description,
         'address' => $this->address,
         'suggested_address' => $this->suggested_address,
-        'location' => [
+        '_geoloc' => [
           'lat' => $this->coords[0],
           'lng' => $this->coords[1],
         ],

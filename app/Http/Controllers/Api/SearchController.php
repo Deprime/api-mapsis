@@ -2,18 +2,13 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Helpers\ElasticSearchQuery\GeoBoundingBox;
-use App\Helpers\ElasticSearchQuery\GeoDistance;
-use App\Helpers\ElasticSearchQuery\Range;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Post\PostSearchRequest;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
-use App\Models\{
-  Post,
-};
+use App\Models\{Currency, Post};
 
 class SearchController extends Controller
 {
@@ -22,43 +17,63 @@ class SearchController extends Controller
 
   /**
    * List
-   * @param  \Illuminate\Http\Request  $request
-   * @return \Illuminate\Http\JsonResponse
+   * @param PostSearchRequest $request
+   * @return JsonResponse
    */
   public function posts(PostSearchRequest $request): JsonResponse
   {
-    $search = Post::search($request->text)->query(fn ($query) => $query->with(static::LIST_RELATIONS));
+    $query         = $request->input('query');
+    $minPrice      = $request->input('min_price');
+    $maxPrice      = $request->input('max_price');
+    $latitude      = $request->input('latitude');
+    $longitude     = $request->input('longitude');
+    $radius        = $request->input('radius');
+    $currency_code = $request->input('currency');
+    $total         = $request->input('total');
 
-    if ($request->min_price || $request->max_price) {
-      $search->must(new Range('price', $request->min_price, $request->max_price));
+    $queryBuilder = Post::search($query);
+
+    $params = [
+      'getRankingInfo' => true,
+      'filters' => ''
+    ];
+
+    if ($latitude !== null && $longitude !== null && $radius !== null) {
+      $params['aroundRadius'] = intval($radius);
+      $params['aroundLatLng'] = $latitude.','.$longitude;
     }
 
-    if ($request->radius) {
-      $search->filter(new GeoDistance($request->radius, $request->lat, $request->lng));
+    if ($minPrice !== null && $maxPrice !== null) {
+      $params['filters'] = "price:$minPrice TO $maxPrice";
+    }else{
+      if ($minPrice !== null) {
+        $params['filters'] = "price >= $minPrice";
+      }
+      if ($maxPrice !== null) {
+        $params['filters'] = "price <= $maxPrice";
+      }
     }
 
-    elseif ($request->point_top_left and $request->point_bottom_right){
-      $point_top_left = explode(",", $request->point_top_left);
-      $point_bottom_right = explode(",", $request->point_bottom_right);
+    if ($currency_code !== null) {
+      $currency = Currency::where('code',$currency_code)->firstOrFail();
 
-      $search->filter(new GeoBoundingBox(
-        floatval($point_top_left[0]),
-        floatval($point_top_left[1]),
-        floatval($point_bottom_right[0]),
-        floatval($point_bottom_right[1]),
-      ));
+      if($params['filters'] !== ''){
+        $params['filters'] = $params['filters'] . ' AND ' . "currency_id = $currency->id";
+      }else{
+        $params['filters'] = "currency_id == $currency->id" ;
+      }
     }
 
-    $post_list = $search->get();
+    $results = $queryBuilder->with($params)->query(fn ($query) => $query->with(static::LIST_RELATIONS))->paginate($total ?? 20);
 
-    return response()->json($post_list);
+    return response()->json($results);
   }
 
   /**
    * Get
-   * @param  int $estate_id
-   * @param  \Illuminate\Http\Request  $request
-   * @return \Illuminate\Http\JsonResponse
+   * @param Request $request
+   * @param $post_id
+   * @return JsonResponse
    */
   public function get(Request $request, $post_id): JsonResponse
   {

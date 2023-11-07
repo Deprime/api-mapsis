@@ -10,7 +10,6 @@
         "doctrine/dbal": "^3.5",
         "guzzlehttp/guzzle": "^7.2",
         "intervention/image": "^2.7",
-        "jeroen-g/explorer": "^3.3",
         "kitloong/laravel-migrations-generator": "^6.4",
         "laravel/framework": "^10.0",
         "laravel/octane": "^2.0",

@@ -27,13 +27,14 @@ class PostSearchRequest extends FormRequest
     public function rules()
     {
       return [
-        'text' => ['nullable', 'string'],
-        'min_price' => ['nullable', 'numeric'],
-        'max_price' => ['nullable', 'numeric'],
-        'rad'  => ['nullable', 'numeric'],
-        'lat'  => ['required_with:rad', 'numeric'],
-        'lng'  => ['required_with:rad', 'numeric'],
-        'point_top_left' => ['required_with:point_bottom_right', 'string',],
+        'query'              => ['nullable', 'string'],
+        'min_price'          => ['nullable', 'numeric'],
+        'max_price'          => ['nullable', 'numeric'],
+        'rad'                => ['nullable', 'numeric'],
+        'latitude'           => ['required_with:rad', 'numeric'],
+        'longitude'          => ['required_with:rad', 'numeric'],
+        'currency'           => ['string', 'exists:currency,code'],
+        'point_top_left'     => ['required_with:point_bottom_right', 'string',],
         'point_bottom_right' => ['required_with:point_top_left', 'string',]
       ];
     }
