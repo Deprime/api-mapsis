@@ -10,10 +10,12 @@ use App\Http\Controllers\Api\Auth\{
   AccessRestoreController,
 };
 
-use App\Http\Controllers\Api\{PageController,
+use App\Http\Controllers\Api\{FavoritePostController,
+  PageController,
   ProfileController,
   PostController,
   PhotoController,
+  ReviewCommentController,
   ReviewController,
   SearchController,
   DictionaryController};
@@ -76,11 +78,11 @@ Route::namespace('Api')->group(function() {
           Route::get('{profile_id}/reviews',            [ReviewController::class, 'getReviewsByProfile']);
           Route::get('reviews',                         [ReviewController::class, 'getMyReviews']);
           Route::post('reviews',                        [ReviewController::class, 'createReview']);
-          Route::post('reviews/comment/{review_id}',    [ReviewController::class, 'createReviewComment']);
+          Route::post('reviews/comment/{review_id}',    [ReviewCommentController::class, 'create']);
           Route::put('reviews/{review_id}',             [ReviewController::class, 'updateMyReview']);
-          Route::put('reviews/comment/{comment_id}',    [ReviewController::class, 'updateMyReviewComment']);
+          Route::put('reviews/comment/{comment_id}',    [ReviewCommentController::class, 'updateMyComment']);
           Route::delete('reviews/{review_id}',          [ReviewController::class, 'deleteMyReview']);
-          Route::delete('reviews/comment/{comment_id}', [ReviewController::class, 'deleteMyReviewComment']);
+          Route::delete('reviews/comment/{comment_id}', [ReviewCommentController::class, 'deleteMyComment']);
 
           // Referrals
           Route::prefix('referrals')->group(function() {
@@ -108,9 +110,9 @@ Route::namespace('Api')->group(function() {
 
           // Favorites
           Route::prefix('favorites')->group(function() {
-            Route::get('/',            [PostController::class, 'getFavorites']);
-            Route::post('/{post_id}',  [PostController::class, 'addFavorite']);
-            Route::delete('/{post_id}',[PostController::class, 'removeFavorite']);
+            Route::get('/',            [FavoritePostController::class, 'list']);
+            Route::post('/{post_id}',  [FavoritePostController::class, 'create']);
+            Route::delete('/{post_id}',[FavoritePostController::class, 'delete']);
           });
         });
       });
