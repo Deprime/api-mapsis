@@ -10,14 +10,13 @@ use App\Http\Controllers\Api\Auth\{
   AccessRestoreController,
 };
 
-use App\Http\Controllers\Api\{
-  PageController,
+use App\Http\Controllers\Api\{PageController,
   ProfileController,
   PostController,
   PhotoController,
+  ReviewController,
   SearchController,
-  DictionaryController
-};
+  DictionaryController};
 
 /*
 |--------------------------------------------------------------------------
@@ -72,6 +71,14 @@ Route::namespace('Api')->group(function() {
           Route::get('/',                 [ProfileController::class, 'get']);
           Route::put('/',                 [ProfileController::class, 'update']);
           Route::put('/change-password',  [ProfileController::class, 'changePassword']);
+
+          // Reviews
+          Route::get('{profile_id}/reviews',          [ReviewController::class, 'getReviewsByProfile']);
+          Route::get('reviews',                       [ReviewController::class, 'getMyReviews']);
+          Route::post('reviews',                      [ReviewController::class, 'createReview']);
+          Route::post('reviews/comment/{review_id}',          [ReviewController::class, 'createReviewComment']);
+          Route::put('reviews/{review_id}',           [ReviewController::class, 'updateMyReview']);
+          Route::put('reviews/comment/{comment_id}',  [ReviewController::class, 'updateMyReviewComment']);
 
           // Referrals
           Route::prefix('referrals')->group(function() {

@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
     $this->call(PostStatusTableSeeder::class);
     $this->call(PostStatusTableSeeder::class);
     $this->call(CurrencyTableSeeder::class);
+    $this->call(ReviewSeeder::class);
 
     \DB::statement('SET FOREIGN_KEY_CHECKS=1;');
   }

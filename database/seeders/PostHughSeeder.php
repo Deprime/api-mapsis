@@ -17,7 +17,7 @@ class PostHughSeeder extends Seeder
      */
     public function run()
     {
-      Post::factory()->count(50000)->state(new Sequence(
+      Post::factory()->count(70)->state(new Sequence(
         fn ($sequence) => [
           'category_id' => Category::all()->random(),
           'currency_id' => Currency::all()->random(),
