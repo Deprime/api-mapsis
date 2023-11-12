@@ -27,7 +27,6 @@ class UpdateReviewRequest extends FormRequest
         return [
           'content' => 'nullable|string',
           'mark' => 'nullable|integer',
-          'delete' => 'nullable|boolean',
         ];
     }
 

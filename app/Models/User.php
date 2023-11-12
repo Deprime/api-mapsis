@@ -255,10 +255,14 @@ class User extends Authenticatable
             rand(0,9) . $string[rand(0,$max)];
   }
 
-
   /**
-   * Realtions section
+   * Favorites posts
+   * @return BelongsToMany
    */
+  public function favoritePosts(): BelongsToMany
+  {
+    return $this->belongsToMany(Post::class, 'favorite_posts', 'user_id', 'post_id')->withTimestamps();
+  }
 
   /**
    * Events

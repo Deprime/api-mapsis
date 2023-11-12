@@ -163,6 +163,15 @@ class Post extends Model
   }
 
   /**
+   *
+   * @return BelongsToMany
+   */
+  public function favoritedBy()
+  {
+    return $this->belongsToMany(User::class, 'favorite_posts', 'post_id', 'user_id')->withTimestamps();
+  }
+
+  /**
    * Scope published
    * @param  \Illuminate\Database\Eloquent\Builder  $query
    * @return \Illuminate\Database\Eloquent\Builder

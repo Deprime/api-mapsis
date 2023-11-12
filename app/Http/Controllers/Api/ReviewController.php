@@ -102,7 +102,7 @@ class ReviewController extends Controller
   }
 
   /**
-   * Update Revieww
+   * Update Review
    * @param UpdateReviewRequest $request
    * @param int $review_id
    * @return JsonResponse
@@ -113,20 +113,30 @@ class ReviewController extends Controller
 
     $review = Review::query()->where('id', $review_id)->where('author_id', $user->id)->firstOrFail();
 
-    $deleteFlag = $request->input('delete', false);
-
-    if ($deleteFlag) {
-      $review->delete();
-      return response()->json(['message' => 'Review deleted.']);
-    }
-
     $review->update(array_filter($request->all(), fn ($value) => $value !== null));
 
     return response()->json($review);
   }
 
   /**
-   * Update Revieww
+   * Delete Review
+   * @param Request $request
+   * @param int $review_id
+   * @return JsonResponse
+   */
+  public function deleteMyReview(Request $request, int $review_id)
+  {
+    $user = $request->user();
+
+    $review = Review::query()->where('id', $review_id)->where('author_id', $user->id)->firstOrFail();
+
+    $review->delete();
+
+    return response()->json(['message' => 'Review deleted.']);
+  }
+
+  /**
+   * Update Review Comment
    * @param UpdateReviewCommentRequest $request
    * @param int $comment_id
    * @return JsonResponse
@@ -147,5 +157,22 @@ class ReviewController extends Controller
     $review->update(array_filter($request->all(), fn ($value) => $value !== null));
 
     return response()->json($review);
+  }
+
+  /**
+   * Delete Review Comment
+   * @param Request $request
+   * @param int $comment_id
+   * @return JsonResponse
+   */
+  public function deleteMyReviewComment(Request $request, int $comment_id)
+  {
+    $user = $request->user();
+
+    $review = ReviewComment::query()->where('id', $comment_id)->where('author_id', $user->id)->firstOrFail();
+
+    $review->delete();
+
+    return response()->json(['message' => 'Comment deleted.']);
   }
 }

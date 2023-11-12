@@ -26,7 +26,6 @@ class UpdateReviewCommentRequest extends FormRequest
     {
         return [
           'content' => 'nullable|string',
-          'delete' => 'nullable|boolean',
         ];
     }
 

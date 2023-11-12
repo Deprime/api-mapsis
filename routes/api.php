@@ -73,12 +73,14 @@ Route::namespace('Api')->group(function() {
           Route::put('/change-password',  [ProfileController::class, 'changePassword']);
 
           // Reviews
-          Route::get('{profile_id}/reviews',          [ReviewController::class, 'getReviewsByProfile']);
-          Route::get('reviews',                       [ReviewController::class, 'getMyReviews']);
-          Route::post('reviews',                      [ReviewController::class, 'createReview']);
-          Route::post('reviews/comment/{review_id}',          [ReviewController::class, 'createReviewComment']);
-          Route::put('reviews/{review_id}',           [ReviewController::class, 'updateMyReview']);
-          Route::put('reviews/comment/{comment_id}',  [ReviewController::class, 'updateMyReviewComment']);
+          Route::get('{profile_id}/reviews',            [ReviewController::class, 'getReviewsByProfile']);
+          Route::get('reviews',                         [ReviewController::class, 'getMyReviews']);
+          Route::post('reviews',                        [ReviewController::class, 'createReview']);
+          Route::post('reviews/comment/{review_id}',    [ReviewController::class, 'createReviewComment']);
+          Route::put('reviews/{review_id}',             [ReviewController::class, 'updateMyReview']);
+          Route::put('reviews/comment/{comment_id}',    [ReviewController::class, 'updateMyReviewComment']);
+          Route::delete('reviews/{review_id}',          [ReviewController::class, 'deleteMyReview']);
+          Route::delete('reviews/comment/{comment_id}', [ReviewController::class, 'deleteMyReviewComment']);
 
           // Referrals
           Route::prefix('referrals')->group(function() {
@@ -102,6 +104,13 @@ Route::namespace('Api')->group(function() {
             Route::post('/',            [PhotoController::class, 'create']);
             Route::put('{photo_id}',    [PhotoController::class, 'setPoster'])->whereNumber('photo_id');
             Route::delete('{photo_id}', [PhotoController::class, 'delete'])->whereNumber('photo_id');
+          });
+
+          // Favorites
+          Route::prefix('favorites')->group(function() {
+            Route::get('/',            [PostController::class, 'getFavorites']);
+            Route::post('/{post_id}',  [PostController::class, 'addFavorite']);
+            Route::delete('/{post_id}',[PostController::class, 'removeFavorite']);
           });
         });
       });

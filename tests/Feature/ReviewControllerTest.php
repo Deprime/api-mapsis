@@ -130,9 +130,7 @@ class ReviewControllerTest extends TestCase
     $user = User::factory()->create();
     $review = Review::factory()->create(['author_id' => $user->id]);
 
-    $response = $this->actingAs($user)->put("api/v1/app/profile/reviews/{$review->id}", [
-      'delete' => true,
-    ]);
+    $response = $this->actingAs($user)->delete("api/v1/app/profile/reviews/{$review->id}");
 
     $response->assertStatus(200)
       ->assertJson(['message' => 'Review deleted.']);
@@ -150,7 +148,7 @@ class ReviewControllerTest extends TestCase
     ]);
 
     $response->assertStatus(200)
-      ->assertJsonStructure(['id', 'content', /* ... другие поля */]);
+      ->assertJsonStructure(['id', 'content']);
 
     $this->assertDatabaseHas('review_comment', [
       'id' => $comment->id,
@@ -163,9 +161,7 @@ class ReviewControllerTest extends TestCase
     $user = User::factory()->create();
     $comment = ReviewComment::factory()->create(['author_id' => $user->id]);
 
-    $response = $this->actingAs($user)->put("api/v1/app/profile/reviews/comment/{$comment->id}", [
-      'delete' => true,
-    ]);
+    $response = $this->actingAs($user)->delete("api/v1/app/profile/reviews/comment/{$comment->id}");
 
     $response->assertStatus(200)
       ->assertJson(['message' => 'Comment deleted.']);
