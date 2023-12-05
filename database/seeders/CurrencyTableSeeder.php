@@ -4,6 +4,9 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
+/**
+ * php artisan db:seed --class CurrencyTableSeeder
+ */
 class CurrencyTableSeeder extends Seeder
 {
 
@@ -14,8 +17,6 @@ class CurrencyTableSeeder extends Seeder
      */
     public function run()
     {
-
-
         \DB::table('currency')->truncate();
         \DB::table('currency')->insert(array (
             0 =>

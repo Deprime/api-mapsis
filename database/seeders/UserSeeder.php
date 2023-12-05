@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\{
 };
 use App\Models\Role;
 
+/**
+ * php artisan db:seed --class UserSeeder
+ */
 class UserSeeder extends Seeder
 {
     /**
